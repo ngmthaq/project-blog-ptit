@@ -6,48 +6,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unna:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./public/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./public/vendor/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="./public/css/toolbar.css">
-    <link rel="stylesheet" href="./public/css/menuButton.css">
-    <link rel="stylesheet" href="./public/css/animation.css">
-    <link rel="stylesheet" href="./public/css/base.css">
-    <link rel="stylesheet" href="./public/css/style.css">
+
+    <?php require_once('./views/parts/__head.php') ?>
+
     <style></style>
 </head>
 
 <body>
     <div class="main">
         <?php require_once('./views/parts/__header.php') ?>
-
+        <section id="first-video">
+            <video src="public\assets\img\video-clound.mp4" muted autoplay loop></video>
+            <div class="black-layout"></div>
+            <h1 class="logo">
+                <span>Homestay</span>
+                <br>
+                <span class="sidebar-title">Blog</span>
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="social-box text-center">
+                            <a href="#" class="btn btn-outline-info">SUBSCRIBE</a>
+                            <ul class="social">
+                                <li><a class="text-decoration-none text-light" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="text-decoration-none text-light" href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="text-decoration-none text-light" href="#"><i class="fab fa-tiktok"></i></a></li>
+                                <li><a class="text-decoration-none text-light" href="#"><i class="far fa-envelope"></i></a></li>
+                                <li><a class="text-decoration-none text-light" href="#"><i class="fas fa-phone"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <small style="text-align: justify;">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium molestiae, culpa,
+                            iste voluptatem maiores modi facilis quidem autem quibusdam nobis sunt quisquam possimus
+                            hic in odit perferendis soluta enim ducimus!
+                        </small>
+                    </div>
+                    <div class="col-lg-4">
+                        <small style="text-align: justify;">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium molestiae, culpa,
+                            iste voluptatem maiores modi facilis quidem autem quibusdam nobis sunt quisquam possimus
+                            hic in odit perferendis soluta enim ducimus!
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-container" id="second-banner">
+            
+        </section>
         <?php require_once('./views/parts/__footer.php') ?>
     </div>
-    <script src="./public/vendor/jquery/jquery-3.6.0.min.js"></script>
-    <script src="./public/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./public/vendor/fontawesome/js/all.min.js"></script>
-    <script src="./public/js/FontMenu.js"></script>
-    <script src="./public/js/FontMenuButton.js"></script>
-    <script src="./public/js/FontMenuItem.js"></script>
-    <script src="./public/js/FormatToolbar.js"></script>
-    <script src="./public/js/FormatToolbarItem.js"></script>
-    <script src="./public/js/SpinButton.js"></script>
-    <script src="./public/js/main.js"></script>
+
+    <?php require_once('./views/parts/__script.php') ?>
+
     <script>
         $(function() {
-            $('.header-search-button').click(function (e) { 
-                e.preventDefault();
-                $('.search-modal').css('display','block');
-                $('.close-search-modal').css('display','flex');
-            });
-
-            $('.close-search-modal').click(function (e) { 
-                e.preventDefault();
-                $('.search-modal').css('display','none');
-                $(this).css('display','none');
-            });
+            
         })
     </script>
 </body>

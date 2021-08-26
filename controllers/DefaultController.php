@@ -9,6 +9,7 @@ class DefaultController
      */
     public function index()
     {
+        $whichPage = 'home';
         require_once('./views/homepage/homepage.php');
     }
 }
