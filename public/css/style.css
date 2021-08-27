@@ -75,7 +75,7 @@
     position: relative;
 }
 
-.first-post > h1 {
+.first-post>h1 {
     position: absolute;
     top: 24%;
     left: 16%;
@@ -87,13 +87,13 @@
     transition: all .2s linear;
 }
 
-.first-post > h1:hover {
+.first-post>h1:hover {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 6px;
     border-radius: 5px;
 }
 
-.first-post > p {
+.first-post>p {
     position: absolute;
     top: 32%;
     right: 18%;
@@ -105,13 +105,13 @@
     transition: all .2s linear;
 }
 
-.first-post > p:hover {
+.first-post>p:hover {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 6px;
     border-radius: 5px;
 }
 
-.first-post > span {
+.first-post>span {
     position: absolute;
     bottom: 28%;
     left: 28%;
@@ -123,7 +123,7 @@
     transition: all .2s linear;
 }
 
-.first-post > span:hover {
+.first-post>span:hover {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 6px;
     border-radius: 5px;
@@ -209,7 +209,7 @@
     border-radius: 10px;
 }
 
-.categories-list .item:hover > a {
+.categories-list .item:hover>a {
     display: flex;
 }
 
@@ -226,9 +226,63 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     display: none;
+    -webkit-animation: fadeIn .3s ease-in-out;
     animation: fadeIn .3s ease-in-out;
 }
 
 .test {
     height: 100vh;
+}
+
+.section-bg {
+    background-color: #f6f9fe;
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+.section-title {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.section-title h2 {
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    padding: 8px 20px;
+    margin: 0;
+    background: #e7f1fd;
+    color: #106eea;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 50px;
+}
+
+.section-title h3 {
+    margin: 15px 0 0 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.section-title p {
+    margin: 15px auto 0 auto;
+    font-weight: 600;
+}
+
+.about .content h3 {
+    font-weight: 600;
+    font-size: 26px;
+}
+
+.fst-italic {
+    font-style: italic!important;
+}
+
+.about .content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about .content p:last-child {
+    margin-bottom: 0;
 }

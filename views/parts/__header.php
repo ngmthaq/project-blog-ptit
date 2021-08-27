@@ -7,6 +7,15 @@
     </script>
 <?php endif; ?>
 
+<?php if ($whichPage == 'contact') : ?>
+    <a id="scrollcontact" href="#contact"></a>
+    <script>
+        window.onload = function() {
+            document.querySelector('#scrollcontact').click()
+        }
+    </script>
+<?php endif; ?>
+
 <!-- Search -->
 <div class="search-modal">
     <div class="close-search-modal">
@@ -126,7 +135,7 @@
                             <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
                         </li>
                         <li>
-                            <a href="#" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
+                            <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
                         </li>
                     </ul>
                 </div>

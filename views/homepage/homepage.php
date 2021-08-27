@@ -123,7 +123,9 @@
             <?php require_once('./views/parts/__about-us.php') ?>
         </section>
 
-        <div class="layout-pagination" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./public/assets/img/layout-pagination-2.jpg);"></div>
+        <?php require_once('./views/parts/__contact.php') ?>
+
+        <div class="layout-pagination" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(./public/assets/img/layout-pagination-2.jpg);"></div>
         <!-- <section class="test"></section> -->
         <?php require_once('./views/parts/__footer.php') ?>
     </div>

@@ -37,4 +37,12 @@ class DefaultController
         $whichPage ='aboutUs';
         require_once('./views/homepage/homepage.php');
     }
+
+    public function contact()
+    {
+        $categories = $this->categories->getCategoryAndAmountOfPost();
+        $posts = $this->posts->getFirstSixPostInformation();
+        $whichPage ='contact';
+        require_once('./views/homepage/homepage.php');
+    }
 }
