@@ -64,15 +64,20 @@
     })
 
     function scrollFunction() {
+        //Get the button
+        var mybutton = document.getElementById("scroll-to-top");
         let header = document.querySelector('header');
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
             header.style.backgroundColor = "rgba(0, 0, 0, .99)";
             header.style.margin = "0";
             header.style.boxShadow = "1px 5px 30px 5px rgba(255, 255, 255, 0.2)";
+            mybutton.style.display = "flex";
         } else {
             header.style.backgroundColor = "transparent";
             header.style.margin = "24px 0";
             header.style.boxShadow = "none";
+            mybutton.style.display = "none";
+
         }
     }
 </script>

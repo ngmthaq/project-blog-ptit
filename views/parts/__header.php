@@ -1,3 +1,12 @@
+<?php if ($whichPage == 'aboutUs') : ?>
+    <a id="scrollAboutUs" href="#aboutUs"></a>
+    <script>
+        window.onload = function() {
+            document.querySelector('#scrollAboutUs').click()
+        }
+    </script>
+<?php endif; ?>
+
 <!-- Search -->
 <div class="search-modal">
     <div class="close-search-modal">
@@ -36,10 +45,10 @@
             <a href="#">Categories</a>
         </li>
         <li>
-            <a href="#">About us</a>
+            <a href="index.php?action=aboutUs">About us</a>
         </li>
         <li>
-            <a href="#">Contact</a>
+            <a href="index.php?action=contact">Contact</a>
         </li>
     </ul>
     <div class="sidebar-header">
@@ -114,7 +123,7 @@
                             <a href="#" <?php echo ($whichPage == 'categories') ? 'class="my-active"' : ''; ?>>Categories</a>
                         </li>
                         <li>
-                            <a href="#" <?php echo ($whichPage == 'about_us') ? 'class="my-active"' : ''; ?>>About us</a>
+                            <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
                         </li>
                         <li>
                             <a href="#" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
