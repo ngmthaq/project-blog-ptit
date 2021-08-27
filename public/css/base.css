@@ -4,7 +4,13 @@
     --main-color: #19c3dd;
 }
 
-/* Body */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
 
 /* width */
 
@@ -110,7 +116,7 @@ header {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     background-color: black;
     display: none;
     -webkit-animation: fadeIn .3s linear;
@@ -459,4 +465,12 @@ header {
     padding: 8px 24px;
     color: #fff;
     font-weight: 500;
+}
+
+.owl-nav {
+    display: none;
+}
+
+.owl-dots {
+    display: none;
 }

@@ -7,7 +7,7 @@
 <script src="./public/js/FormatToolbar.js?v=<?php echo time(); ?>"></script>
 <script src="./public/js/FormatToolbarItem.js?v=<?php echo time(); ?>"></script>
 <script src="./public/js/SpinButton.js?v=<?php echo time(); ?>"></script>
-<script src="./public/vendor/owlcarousel/dist/owl.carousel.min.js"></script>
+<script src="./public/vendor/owlcarousel/dist/owl.carousel.min.js?v=<?php echo time(); ?>"></script>
 <script src="./public/js/main.js?v=<?php echo time(); ?>"></script>
 <script>
     $(function() {
@@ -66,11 +66,13 @@
     function scrollFunction() {
         let header = document.querySelector('header');
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            header.style.backgroundColor = "rgba(0, 0, 0, .9)";
+            header.style.backgroundColor = "rgba(0, 0, 0, .99)";
             header.style.margin = "0";
+            header.style.boxShadow = "1px 5px 30px 5px rgba(255, 255, 255, 0.2)";
         } else {
             header.style.backgroundColor = "transparent";
             header.style.margin = "24px 0";
+            header.style.boxShadow = "none";
         }
     }
 </script>
