@@ -45,19 +45,19 @@
     </h1>
     <ul class="nav-sidebar">
         <li>
-            <a href="index.php" class='my-active'>Home</a>
+            <a href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
         </li>
         <li>
-            <a href="#">Posts</a>
+            <a href="#" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
         </li>
         <li>
-            <a href="#">Categories</a>
+            <a href="#" <?php echo ($whichPage == 'categories') ? 'class="my-active"' : ''; ?>>Categories</a>
         </li>
         <li>
-            <a href="index.php?action=aboutUs">About us</a>
+            <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
         </li>
         <li>
-            <a href="index.php?action=contact">Contact</a>
+            <a href="index.php?action=contact"<?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
         </li>
     </ul>
     <div class="sidebar-header">
