@@ -39,7 +39,7 @@
             <!-- Grid row -->
             <div class="row mt-3">
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <div class="col-md-12 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         <h1 class="logo mb-2" style="font-size: 32px; padding-top: 0;">
@@ -54,9 +54,9 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-12 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase fw-bold my-4">
                         Categories
                     </h6>
                     <?php foreach ($categories as $category) : ?>
@@ -68,9 +68,9 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-12 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase fw-bold my-4">
                         Useful links
                     </h6>
                     <p>
@@ -89,9 +89,9 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <div class="col-md-12 col-lg-3 col-xl-3 mx-auto mb-lg-0 mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase fw-bold my-4">
                         Contact
                     </h6>
                     <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>

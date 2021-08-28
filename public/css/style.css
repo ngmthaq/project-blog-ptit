@@ -210,7 +210,7 @@
 }
 
 .categories-list .item:hover>a {
-    display: flex;
+    display: flex !important;
 }
 
 .categories-list .item a {
@@ -285,4 +285,29 @@
 
 .about .content p:last-child {
     margin-bottom: 0;
+}
+
+.post-title {
+    margin-top: 100px;
+}
+
+.post-categories {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    padding: 8px 0;
+}
+
+.post-categories li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-categories li a {
+    color: #000;
+    padding: 8px 0;
+}
+
+.post-categories li a:hover {
+    color: #19c3dd;
 }

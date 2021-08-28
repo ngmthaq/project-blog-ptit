@@ -11,6 +11,19 @@
 <script src="./public/js/main.js?v=<?php echo time(); ?>"></script>
 <script>
     $(function() {
+        $('#category-header').hover(function () {
+                // over
+                $('.category-box').css('display', 'block');
+            }, function () {
+                // out
+                $('.category-box').css('display', 'none');
+            }
+        );
+
+        $('#categories-list').click(function() {
+            $('.categories-list').slideToggle();
+        });
+
         $('.header-search-button').click(function(e) {
             e.preventDefault();
             $('.search-modal').css('display', 'block');
@@ -61,23 +74,31 @@
         window.onscroll = function() {
             scrollFunction()
         };
+
+        function scrollFunction() {
+            //Get the button
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                $('header').css('background-color', 'rgba(0, 0, 0, .99)');
+                $('header').css('margin', '0');
+                $('header').css('box-shadow', '1px 5px 30px 5px rgba(255, 255, 255, 0.2)');
+                $('#scroll-to-top').css('display', 'flex');
+                <?php if ($whichPage == 'posts') : ?>
+                    $('a[data-el="navbar"]').css('color', '#fff');
+                    $('.header-button').addClass('text-light');
+                    $('.header-button').removeClass('text-dark');
+                <?php endif; ?>
+            } else {
+                $('header').css('background-color', 'transparent');
+                $('header').css('margin', '24px 0');
+                $('header').css('box-shadow', 'none');
+                $('#scroll-to-top').css('display', 'none');
+                <?php if ($whichPage == 'posts') : ?>
+                    $('a[data-el="navbar"]').css('color', '#000');
+                    $('.header-button').addClass('text-dark');
+                    $('.header-button').removeClass('text-light');
+                <?php endif; ?>
+            }
+        }
     })
 
-    function scrollFunction() {
-        //Get the button
-        var mybutton = document.getElementById("scroll-to-top");
-        let header = document.querySelector('header');
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            header.style.backgroundColor = "rgba(0, 0, 0, .99)";
-            header.style.margin = "0";
-            header.style.boxShadow = "1px 5px 30px 5px rgba(255, 255, 255, 0.2)";
-            mybutton.style.display = "flex";
-        } else {
-            header.style.backgroundColor = "transparent";
-            header.style.margin = "24px 0";
-            header.style.boxShadow = "none";
-            mybutton.style.display = "none";
-
-        }
-    }
 </script>

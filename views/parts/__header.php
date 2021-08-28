@@ -1,21 +1,3 @@
-<?php if ($whichPage == 'aboutUs') : ?>
-    <a id="scrollAboutUs" href="#aboutUs"></a>
-    <script>
-        window.onload = function() {
-            document.querySelector('#scrollAboutUs').click()
-        }
-    </script>
-<?php endif; ?>
-
-<?php if ($whichPage == 'contact') : ?>
-    <a id="scrollcontact" href="#contact"></a>
-    <script>
-        window.onload = function() {
-            document.querySelector('#scrollcontact').click()
-        }
-    </script>
-<?php endif; ?>
-
 <!-- Search -->
 <div class="search-modal">
     <div class="close-search-modal">
@@ -48,10 +30,15 @@
             <a href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
         </li>
         <li>
-            <a href="#" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
+            <a href="index.php?action=posts" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
         </li>
         <li>
-            <a href="#" <?php echo ($whichPage == 'categories') ? 'class="my-active"' : ''; ?>>Categories</a>
+            <a href="#" id="categories-list">Categories</a>
+            <div class="categories-list" style="display: none">
+                <?php foreach($categories as $category) : ?>
+                    <a href="#" class="d-inline-block" style="font-size: 12px; margin-left: 12px;"><?php echo $category['name'] ?></a><br>
+                <?php endforeach; ?>
+            </div>
         </li>
         <li>
             <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
@@ -116,31 +103,36 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-2 col-6">
-                    <button class="open-sidebar btn btn-sm btn-out-line-none text-light">
+                    <button class="header-button open-sidebar btn btn-sm btn-out-line-none <?php echo ($whichPage == 'posts') ? 'text-dark' : 'text-light' ?>">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
                 <div class="col-lg-8 d-none d-lg-block text-center">
-                    <ul class="nav-list">
+                    <ul class="nav-list <?php echo ($whichPage == 'posts') ? 'nav-list-dark' : '' ?>">
                         <li>
-                            <a href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
+                            <a data-el="navbar" href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
                         </li>
                         <li>
-                            <a href="#" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
+                            <a data-el="navbar" href="index.php?action=posts" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
+                        </li>
+                        <li id="category-header" style="position: relative;">
+                            <a data-el="navbar" href="#">Categories</a>
+                            <div class="category-box">
+                                <?php foreach($categories as $category) : ?>
+                                    <a href="#"><?php echo $category['name'] ?></a>
+                                <?php endforeach; ?>
+                            </div>
                         </li>
                         <li>
-                            <a href="#" <?php echo ($whichPage == 'categories') ? 'class="my-active"' : ''; ?>>Categories</a>
+                            <a data-el="navbar" href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
                         </li>
                         <li>
-                            <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
-                        </li>
-                        <li>
-                            <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
+                            <a data-el="navbar" href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-6 text-right">
-                    <button class="header-search-button btn btn-sm btn-outline-none text-light">
+                    <button class="header-button header-search-button btn btn-sm btn-outline-none <?php echo ($whichPage == 'posts') ? 'text-dark' : 'text-light' ?>">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
