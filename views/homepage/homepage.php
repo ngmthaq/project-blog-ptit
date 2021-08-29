@@ -56,7 +56,7 @@
                             </div>
                         <?php endforeach; ?>
                         <div class="col-12 text-center">
-                            <a href="#" class="btn btn-dark my-2">LOAD MORE</a>
+                            <a href="index.php?action=posts" class="btn btn-dark my-2">LOAD MORE</a>
                         </div>
                     <?php else : ?>
                         <div class="col-12">We don't have any post in this page</div>
@@ -77,7 +77,7 @@
                             <?php if (count($categories) > 0) : ?>
                                 <?php foreach ($categories as $category) : ?>
                                     <div class="item" style="background-image: url(<?php echo $category['image'] ?>)">
-                                        <a href="#" class="text-decoration-none text-dark text-center d-lg-none d-flex">
+                                        <a href="index.php?action=posts&category=<?php echo $category['id'] ?>" class="text-decoration-none text-dark text-center d-lg-none d-flex">
                                             <p><?php echo $category['name'] ?></p>
                                             <p>
                                                 <small>

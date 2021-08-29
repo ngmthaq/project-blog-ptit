@@ -22,34 +22,37 @@
             <div class="row">
                 <div class="col-lg-9 col-12">
                     <!-- First box -->
-                    <div class="first-post-box">
-                        <div class="card my-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-4" style="padding: 1.25rem 0 1.25rem 1.25rem;">
-                                    <img style="border-radius: 10px;" width="100%" src="<?php echo $firstPost['cover_path'] . MY_DIRECTORY_SEPARATOR . $firstPost['cover_name'] ?>" alt="<?php echo $firstPost['id'] ?>">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <a href="#" class="card-text">
-                                            <small class="text-muted">
-                                                <?php echo $firstPost['category'] ?>
-                                            </small>
-                                        </a>
-                                        <a href="#" class="text-reset mt-1">
-                                            <h5 class="card-title"><?php echo $firstPost['title'] ?></h5>
-                                        </a>
-                                        <p class="card-text"><?php echo $firstPost['subtitle'] ?></p>
-                                        <p class="card-text">
-                                            <small class="text-muted">
-                                                Post at <?php echo date('d-m-Y', strtotime($firstPost['date'])) ?> by <?php echo $firstPost['user'] ?>
-                                            </small>
-                                        </p>
+                    <?php if ($firstPost) : ?>
+                        <div class="first-post-box">
+                            <div class="card my-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4" style="padding: 1.25rem 0 1.25rem 1.25rem;">
+                                        <img style="border-radius: 10px;" width="100%" src="<?php echo $firstPost['cover_path'] . MY_DIRECTORY_SEPARATOR . $firstPost['cover_name'] ?>" alt="<?php echo $firstPost['id'] ?>">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#" class="card-text">
+                                                <small class="text-muted">
+                                                    <?php echo $firstPost['category'] ?>
+                                                </small>
+                                            </a>
+                                            <a href="#" class="text-reset mt-1">
+                                                <h5 class="card-title"><?php echo $firstPost['title'] ?></h5>
+                                            </a>
+                                            <p class="card-text"><?php echo $firstPost['subtitle'] ?></p>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    Post at <?php echo date('d-m-Y', strtotime($firstPost['date'])) ?> by <?php echo $firstPost['user'] ?>
+                                                </small>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    <?php else : ?>
+                        <p class="col-12 text-center mt-5">Không có bài viết</p>
+                    <?php endif; ?>
                     <!-- Another box -->
                     <div class="posts-box row">
                         <?php if (count($posts) > 0) : ?>
@@ -76,8 +79,6 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                        <?php else : ?>
-                            <p class="text-center">Không có bài viết</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -87,7 +88,7 @@
                         <ul class="post-categories">
                             <?php foreach ($categories as $category) : ?>
                                 <li>
-                                    <a href="#"><?php echo $category['name'] ?></a>
+                                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
                                     <small><?php echo $category['posts'] ?> <?php echo ($category['posts'] > 1) ? 'posts' : 'post' ?></small>
                                 </li>
                             <?php endforeach; ?>
@@ -143,7 +144,7 @@
             </div>
             <div class="row">
                 <div class="text-center col-lg-12 my-5">
-                    <a href="#" data-page="<?php echo $page ?? 1 ?>" class="loadmore btn btn-outline-info">LOAD MORE</a>
+                    <a href="#" data-category="<?php echo $category_id ?>" data-page="<?php echo $page ?? 1 ?>" class="loadmore btn btn-outline-info">LOAD MORE</a>
                 </div>
             </div>
         </div>
@@ -169,7 +170,8 @@
                     method: "get",
                     url: "index.php?action=loadMorePosts",
                     data: {
-                        page: parseInt($('a.loadmore').attr('data-page')) + 1
+                        page: parseInt($('a.loadmore').attr('data-page')) + 1,
+                        category: $('a.loadmore').attr('data-category')
                     },
                     success: function(response) {
                         decode_response = JSON.parse(response)

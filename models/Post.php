@@ -11,7 +11,7 @@ class Post extends Model
      * 
      * @return array
      */
-    public function getFirstSixPostInformation()
+    public function getFirstSixPostInformation($category = null)
     {
         $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
         INNER JOIN categories ON posts.category_id = categories.id 
@@ -28,11 +28,20 @@ class Post extends Model
      * 
      * @return array
      */
-    public function getFirstPostInformation()
+    public function getFirstPostInformation($param, $category = null)
     {
+        $where = '';
+
+        $category_id = $param['category'] ?? null;
+
+        if ($category_id) {
+            $where = " WHERE category_id = $category_id ";
+        }
+
         $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
         INNER JOIN categories ON posts.category_id = categories.id 
         INNER JOIN users ON posts.user_id = users.id
+        $where
         ORDER BY date DESC
         LIMIT 1";
 
@@ -47,13 +56,22 @@ class Post extends Model
      * 
      * @return array
      */
-    public function getNextSixPostInformation($param)
+    public function getNextSixPostInformation($param, $category = null)
     {
+        $where = '';
+
+        $category_id = $param['category'] ?? null;
+
+        if ($category_id) {
+            $where = " WHERE category_id = $category_id ";
+        }
+
         $page = $param['page'] ?? 1;
         $offset = ($page - 1) * 6 + 1;
-        $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
+        $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts`
         INNER JOIN categories ON posts.category_id = categories.id 
         INNER JOIN users ON posts.user_id = users.id
+        $where
         ORDER BY date DESC
         LIMIT 6 OFFSET $offset";
 

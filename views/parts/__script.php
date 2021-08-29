@@ -11,6 +11,11 @@
 <script src="./public/js/main.js?v=<?php echo time(); ?>"></script>
 <script>
     $(function() {
+        $('a[href="#subscribe"]').click(function () {
+            $('.open-sidebar').click();
+            $('input#sub-email').focus();
+        })
+
         $('#category-header').hover(function () {
                 // over
                 $('.category-box').css('display', 'block');

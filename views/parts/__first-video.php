@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="social-box text-center">
-                    <a href="#" class="btn btn-outline-info">SUBSCRIBE</a>
+                    <a href="#subscribe" class="btn btn-outline-info">SUBSCRIBE</a>
                     <ul class="social">
                         <li><a class="text-decoration-none text-light" href="#"><i class="fab fa-facebook-f"></i></a></li>
                         <li><a class="text-decoration-none text-light" href="#"><i class="fab fa-instagram"></i></a></li>

@@ -61,9 +61,10 @@ class DefaultController
     public function posts()
     {
         $categories = $this->categories->getCategoryAndAmountOfPost();
-        $firstPost = $this->posts->getFirstPostInformation();
+        $firstPost = $this->posts->getFirstPostInformation($_GET);
         $posts = $this->posts->getNextSixPostInformation($_GET);
         $whichPage ='posts';
+        $category_id = $_GET['category'] ?? null;
         require_once('./views/posts/posts.php');
     }
 
