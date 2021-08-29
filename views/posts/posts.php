@@ -61,7 +61,7 @@
                                     <div class="card">
                                         <img width="100%" src="<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>" alt="<?php echo $post['id'] ?>" class="card-img-top">
                                         <div class="card-body">
-                                            <a href="#" class="card-text">
+                                            <a href="index.php?action=posts&category=<?php echo $post['category_id'] ?>" class="card-text">
                                                 <small class="text-muted">
                                                     <?php echo $post['category'] ?>
                                                 </small>
@@ -88,10 +88,23 @@
                         <ul class="post-categories">
                             <?php foreach ($categories as $category) : ?>
                                 <li>
-                                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
-                                    <small><?php echo $category['posts'] ?> <?php echo ($category['posts'] > 1) ? 'posts' : 'post' ?></small>
+                                    <a <?php echo ($category['id'] == $category_id) ? 'style="color:#19c3dd;"' : '' ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
+                                    <small><?php echo ($category['posts'] > 99) ? '99+' : $category['posts'] ?> <?php echo ($category['posts'] > 1) ? 'posts' : 'post' ?></small>
                                 </li>
                             <?php endforeach; ?>
+                            <li>
+                                <a href="index.php?action=posts">Tất cả bài viết</a>
+                                <small>
+                                    <?php
+                                    $totalPosts = 0;
+                                    foreach ($categories as $category) {
+                                        $totalPosts += $category['posts'];
+                                    }
+                                    echo ($totalPosts > 99) ? '99+' : $totalPosts;
+                                    echo ($totalPosts > 1) ? ' posts' : ' post';
+                                    ?>
+                                </small>
+                            </li>
                         </ul>
                     </div>
                     <div class="sidebar-header mt-5">
@@ -129,8 +142,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-check-inline">
-                                    <input class="form-check-input my-1" type="checkbox" name="agree-condition" id="agree-condition">
-                                    <label class="form-check-label text-dark" for="agree-condition" style="font-family: 'Poppins', serif; font-size: 12px;">
+                                    <input class="form-check-input my-1" type="checkbox" name="agree-condition" id="agree-condition-posts">
+                                    <label class="form-check-label text-dark" for="agree-condition-posts" style="font-family: 'Poppins', serif; font-size: 12px;">
                                         I agree to the terms & conditions
                                     </label>
                                 </div>

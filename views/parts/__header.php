@@ -36,7 +36,7 @@
             <a href="#" id="categories-list">Categories</a>
             <div class="categories-list" style="display: none">
                 <?php foreach($categories as $category) : ?>
-                    <a href="#" class="d-inline-block" style="font-size: 12px; margin-left: 12px;"><?php echo $category['name'] ?></a><br>
+                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>" class="d-inline-block" style="font-size: 12px; margin-left: 12px;"><?php echo $category['name'] ?></a><br>
                 <?php endforeach; ?>
             </div>
         </li>
@@ -119,7 +119,7 @@
                             <a data-el="navbar" href="#">Categories</a>
                             <div class="category-box">
                                 <?php foreach($categories as $category) : ?>
-                                    <a href="#"><?php echo $category['name'] ?></a>
+                                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
                                 <?php endforeach; ?>
                             </div>
                         </li>
