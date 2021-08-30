@@ -35,7 +35,7 @@
         <li>
             <a href="#" id="categories-list">Categories</a>
             <div class="categories-list" style="display: none">
-                <?php foreach($categories as $category) : ?>
+                <?php foreach ($categories as $category) : ?>
                     <a href="index.php?action=posts&category=<?php echo $category['id'] ?>" class="d-inline-block" style="font-size: 12px; margin-left: 12px;"><?php echo $category['name'] ?></a><br>
                 <?php endforeach; ?>
             </div>
@@ -44,7 +44,10 @@
             <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
         </li>
         <li>
-            <a href="index.php?action=contact"<?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
+            <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
+        </li>
+        <li>
+            <a href="index.php?controller=admin">Login</a>
         </li>
     </ul>
     <div class="sidebar-header">
@@ -118,7 +121,7 @@
                         <li id="category-header" style="position: relative;">
                             <a data-el="navbar" href="#">Categories</a>
                             <div class="category-box">
-                                <?php foreach($categories as $category) : ?>
+                                <?php foreach ($categories as $category) : ?>
                                     <a href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
                                 <?php endforeach; ?>
                             </div>

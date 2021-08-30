@@ -5,13 +5,13 @@ require_once('./models/Post.php');
 
 class DefaultController
 {
-    protected $categories;
-    protected $posts;
+    protected $category;
+    protected $post;
 
     public function __construct()
     {
-        $this->categories = new Category();
-        $this->posts = new Post();
+        $this->category = new Category();
+        $this->post = new Post();
     }
 
     /**
@@ -21,8 +21,8 @@ class DefaultController
      */
     public function index()
     {
-        $categories = $this->categories->getCategoryAndAmountOfPost();
-        $posts = $this->posts->getFirstSixPostInformation();
+        $categories = $this->category->getCategoryAndAmountOfPost();
+        $posts = $this->post->getFirstSixPostInformation();
         $whichPage = 'home';
         require_once('./views/homepage/homepage.php');
     }
@@ -34,8 +34,8 @@ class DefaultController
      */
     public function aboutUs()
     {
-        $categories = $this->categories->getCategoryAndAmountOfPost();
-        $posts = $this->posts->getFirstSixPostInformation();
+        $categories = $this->category->getCategoryAndAmountOfPost();
+        $posts = $this->post->getFirstSixPostInformation();
         $whichPage ='aboutUs';
         require_once('./views/homepage/about-us.php');
     }
@@ -47,8 +47,8 @@ class DefaultController
      */
     public function contact()
     {
-        $categories = $this->categories->getCategoryAndAmountOfPost();
-        $posts = $this->posts->getFirstSixPostInformation();
+        $categories = $this->category->getCategoryAndAmountOfPost();
+        $posts = $this->post->getFirstSixPostInformation();
         $whichPage ='contact';
         require_once('./views/homepage/contact.php');
     }
@@ -60,9 +60,9 @@ class DefaultController
      */
     public function posts()
     {
-        $categories = $this->categories->getCategoryAndAmountOfPost();
-        $firstPost = $this->posts->getFirstPostInformation($_GET);
-        $posts = $this->posts->getNextSixPostInformation($_GET);
+        $categories = $this->category->getCategoryAndAmountOfPost();
+        $firstPost = $this->post->getFirstPostInformation($_GET);
+        $posts = $this->post->getNextSixPostInformation($_GET);
         $whichPage ='posts';
         $category_id = $_GET['category'] ?? null;
         require_once('./views/posts/posts.php');
@@ -75,7 +75,7 @@ class DefaultController
      */
     public function loadMorePosts()
     {
-        $posts = $this->posts->getNextSixPostInformation($_GET);
+        $posts = $this->post->getNextSixPostInformation($_GET);
         $page = $_GET['page'] ?? 1;
         $data = [];
         $data['posts'] = $posts;

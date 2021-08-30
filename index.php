@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $controllerName = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'Default';
 $controller = $controllerName . 'Controller';
 
