@@ -1,8 +1,8 @@
 <section id="first-video">
-    <video src="public\assets\img\video-clound.mp4" muted autoplay loop></video>
+    <video src="public\assets\img\video-clound2.mp4" muted autoplay loop></video>
     <div class="black-layout"></div>
     <h1 class="logo">
-        <span>Homestay</span>
+        <span>Technology</span>
         <br>
         <span class="sidebar-title">Blog</span>
     </h1>

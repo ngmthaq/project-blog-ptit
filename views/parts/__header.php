@@ -20,10 +20,10 @@
         <i class="fas fa-times"></i>
     </div>
     <h1 class="logo d-md-block d-none">
-        <span>Homestay</span><span class="sidebar-title">Blog</span>
+        <span>Technology</span><span class="sidebar-title">Blog</span>
     </h1>
     <h1 class="logo logo-sm d-block d-md-none">
-        <span>Homestay</span><span class="sidebar-title">Blog</span>
+        <span>Technology</span><span class="sidebar-title">Blog</span>
     </h1>
     <ul class="nav-sidebar">
         <li>
@@ -46,9 +46,15 @@
         <li>
             <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
         </li>
-        <li>
-            <a href="index.php?controller=admin">Login</a>
-        </li>
+        <?php if (empty($_SESSION['user'])) : ?>
+            <li>
+                <a href="index.php?controller=admin">Login</a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a href="index.php?controller=admin&action=manager">Manager</a>
+            </li>
+        <?php endif; ?>
     </ul>
     <div class="sidebar-header">
         <h5>Social</h5>

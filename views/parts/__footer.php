@@ -43,7 +43,7 @@
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         <h1 class="logo mb-2" style="font-size: 32px; padding-top: 0;">
-                            <span style="font-size: 42px;">Homestay</span><span style="font-size: 42px;">Blog</span>
+                            <span style="font-size: 42px;">Technology</span><span style="font-size: 42px;">Blog</span>
                         </h1>
                     </h6>
                     <p>

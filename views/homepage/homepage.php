@@ -56,7 +56,7 @@
                             </div>
                         <?php endforeach; ?>
                         <div class="col-12 text-center">
-                            <a href="index.php?action=posts" class="btn btn-dark my-2">LOAD MORE</a>
+                            <a href="index.php?action=posts" class="btn btn-dark my-2">MORE POSTS</a>
                         </div>
                     <?php else : ?>
                         <div class="col-12">We don't have any post in this page</div>
