@@ -3,18 +3,21 @@
 require_once('./models/Category.php');
 require_once('./models/Post.php');
 require_once('./models/User.php');
+require_once('./models/PostImage.php');
 
 class AdminController
 {
     protected $category;
-    protected $post;
     protected $user;
+    protected $post;
+    protected $postImage;
 
     public function __construct()
     {
         $this->category = new Category();
         $this->post = new Post();
         $this->user = new User();
+        $this->postImage = new PostImage();
     }
 
     /**
@@ -64,9 +67,13 @@ class AdminController
      */
     public function manager()
     {
-        $name = $_SESSION['user']['name'];
-        $posts = $this->post->all();
-        require_once('./views/homepage/manager.php');
+        if (isset($_SESSION['user'])) {
+            $name = $_SESSION['user']['name'];
+            $posts = $this->post->all();
+            require_once('./views/homepage/manager.php');
+        } else {
+            header('location: index.php?controller=admin');
+        }
     }
 
     /**
@@ -76,59 +83,16 @@ class AdminController
      */
     public function newPost()
     {
-        if (isset($_POST['submit'])) {
-            $isValidated = true;
-            $isInput = true;
-            $err = [];
-
-            if (trim($_POST['title']) == "") {
-                $isInput = false;
-                $err['title'] = 'Vui lòng nhập tiêu đề';
+        if (isset($_SESSION['user'])) {
+            if (isset($_POST['submit'])) {
+                $post = $this->post->create($_POST, $_FILES['img']);
             }
 
-            if (trim($_POST['subtitle']) == "") {
-                $isInput = false;
-                $err['subtitle'] = 'Vui lòng nhập tiêu đề phụ';
-            }
-
-            if (trim($_POST['paragraph_1']) == "") {
-                $isInput = false;
-                $err['paragraph_1'] = 'Vui lòng nhập đoạn 1';
-            }
-
-            if (trim($_POST['paragraph_2']) == "") {
-                $isInput = false;
-                $err['paragraph_2'] = 'Vui lòng nhập đoạn 2';
-            }
-
-            if (trim($_POST['paragraph_3']) == "") {
-                $isInput = false;
-                $err['paragraph_3'] = 'Vui lòng nhập đoạn 3';
-            }
-
-            if ($isInput) {
-                $directory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
-                $acceptableExtensions = ['jpg', 'jpeg', 'png'];
-                foreach ($_FILES['img'] as $index => $file) {
-                    if ($file['error'] == UPLOAD_ERR_OK) {
-                        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
-                        if (in_array($fileExtension, $acceptableExtensions)) {
-                            if (!is_dir($directory)) {
-                                mkdir($directory);
-                            }
-                            $file_name = md5($file['name'].$_SESSION['user'].date('d-m-Y H:i:s'));
-                            move_uploaded_file($file['tmp_name'], $directory . MY_DIRECTORY_SEPARATOR . 'a');
-                        } else {
-                            $err['img'][$index] = 'Vui lòng nhập đúng định dạng ảnh';
-                        }
-                    } else {
-                        $err['img'][$index] = 'Vui lòng nhập ảnh';
-                        $isValidated = false;
-                    }
-                }
-            }
+            $categories = $this->category->all();
+            require_once('./views/homepage/new-post.php');
+        } else {
+            header('location: index.php?controller=admin');
         }
-        require_once('./views/homepage/new-post.php');
     }
 
     /**
@@ -136,7 +100,8 @@ class AdminController
      * 
      * @return void
      */
-    public function logout() {
+    public function logout()
+    {
         unset($_SESSION['user']);
         header('location: index.php?controller=admin');
     }
