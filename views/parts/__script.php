@@ -91,6 +91,7 @@
                     $('a[data-el="navbar"]').css('color', '#fff');
                     $('.header-button').addClass('text-light');
                     $('.header-button').removeClass('text-dark');
+                    $('.my-active').css('color', '#19c3dd');
                 <?php endif; ?>
             } else {
                 $('header').css('background-color', 'transparent');
@@ -101,6 +102,7 @@
                     $('a[data-el="navbar"]').css('color', '#000');
                     $('.header-button').addClass('text-dark');
                     $('.header-button').removeClass('text-light');
+                    $('.my-active').css('color', '#19c3dd');
                 <?php endif; ?>
             }
         }

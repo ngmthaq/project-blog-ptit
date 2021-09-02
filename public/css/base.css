@@ -320,7 +320,7 @@ header {
 
 .nav-sidebar li a.my-active {
     position: relative;
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 
 .nav-sidebar li a.my-active::after {

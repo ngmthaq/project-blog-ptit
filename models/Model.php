@@ -17,7 +17,7 @@ class Model
 
     public function all()
     {
-        $sql = "SELECT * FROM $this->table ORDER BY id";
+        $sql = "SELECT * FROM $this->table ORDER BY id ASC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }

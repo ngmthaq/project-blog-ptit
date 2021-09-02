@@ -11,7 +11,8 @@ class Category extends Model
         $sql = "SELECT categories.id, categories.name, categories.image, COUNT(posts.id) AS 'posts' 
         FROM categories 
         LEFT JOIN posts ON categories.id = posts.category_id
-        GROUP BY categories.name, categories.image";
+        GROUP BY categories.name, categories.image
+        ORDER BY id ASC";
 
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);

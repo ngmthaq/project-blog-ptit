@@ -27,34 +27,22 @@
     </h1>
     <ul class="nav-sidebar">
         <li>
-            <a href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
+            <a href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Trang chủ</a>
         </li>
         <li>
-            <a href="index.php?action=posts" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
+            <a href="index.php?action=posts" <?php echo ($whichPage == 'posts' && $category_id == 0) ? 'class="my-active"' : '';?>>Bài viết</a>
         </li>
-        <li>
-            <a href="#" id="categories-list">Categories</a>
-            <div class="categories-list" style="display: none">
-                <?php foreach ($categories as $category) : ?>
-                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>" class="d-inline-block" style="font-size: 12px; margin-left: 12px;"><?php echo $category['name'] ?></a><br>
-                <?php endforeach; ?>
-            </div>
-        </li>
-        <li>
-            <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
-        </li>
-        <li>
-            <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
-        </li>
-        <?php if (empty($_SESSION['user'])) : ?>
+        <?php foreach ($categories as $category) : ?>
             <li>
-                <a href="index.php?controller=admin">Login</a>
+                <a <?php echo ($whichPage == 'posts' && $category_id == $category['id']) ? 'class="my-active"' : ''; ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a><br>
             </li>
-        <?php else : ?>
-            <li>
-                <a href="index.php?controller=admin&action=manager">Manager</a>
-            </li>
-        <?php endif; ?>
+        <?php endforeach; ?>
+        <li>
+            <a href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>Giới thiệu</a>
+        </li>
+        <li>
+            <a href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Liên hệ</a>
+        </li>
     </ul>
     <div class="sidebar-header">
         <h5>Social</h5>
@@ -119,24 +107,21 @@
                 <div class="col-lg-8 d-none d-lg-block text-center">
                     <ul class="nav-list <?php echo ($whichPage == 'posts') ? 'nav-list-dark' : '' ?>">
                         <li>
-                            <a data-el="navbar" href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Home</a>
+                            <a data-el="navbar" href="index.php" <?php echo ($whichPage == 'home') ? 'class="my-active"' : ''; ?>>Trang chủ</a>
                         </li>
                         <li>
-                            <a data-el="navbar" href="index.php?action=posts" <?php echo ($whichPage == 'posts') ? 'class="my-active"' : ''; ?>>Posts</a>
+                            <a data-el="navbar" href="index.php?action=posts" <?php echo ($whichPage == 'posts' && $category_id == 0) ? 'class="my-active"' : ''; ?>>Bài viết</a>
                         </li>
-                        <li id="category-header" style="position: relative;">
-                            <a data-el="navbar" href="#">Categories</a>
-                            <div class="category-box">
-                                <?php foreach ($categories as $category) : ?>
-                                    <a href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
-                                <?php endforeach; ?>
-                            </div>
+                        <?php foreach ($categories as $category) : ?>
+                            <li>
+                                <a data-el="navbar" <?php echo ($whichPage == 'posts' && $category_id == $category['id']) ? 'class="my-active"' : ''; ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                        <li>
+                            <a data-el="navbar" href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>Giới thiệu</a>
                         </li>
                         <li>
-                            <a data-el="navbar" href="index.php?action=aboutUs" <?php echo ($whichPage == 'aboutUs') ? 'class="my-active"' : ''; ?>>About us</a>
-                        </li>
-                        <li>
-                            <a data-el="navbar" href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Contact</a>
+                            <a data-el="navbar" href="index.php?action=contact" <?php echo ($whichPage == 'contact') ? 'class="my-active"' : ''; ?>>Liên hệ</a>
                         </li>
                     </ul>
                 </div>

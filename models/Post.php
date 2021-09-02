@@ -88,58 +88,54 @@ class Post extends Model
      */
     public function create($post, $file)
     {
+        echo "<pre>";
 
-        echo '<pre>';
-        print_r($file ?? 'none');
-        echo '</pre>';
+        $isValidated = true;
 
-        $validateText = true;
-        $textErr = $this->validateText($post);
-        if (count($textErr) > 0) {
-            $validateText = false;
+        $validateText = $this->validateText($post);
+        $validateImage = $this->validateImage($file);
+        $uploadFile = $this->getImageInformation($file);
 
-            echo '<pre>';
-            print_r($textErr ?? 'none');
-            echo '</pre>';
+        if (count($validateText) > 0) {
+            print_r($validateText);
+            $isValidated = false;
         }
-
-        $isValitdated = true;
-        $validateImage = ($validateText) ? $this->validateImage($file) : [];
 
         if (count($validateImage) > 0) {
-            if (count($validateImage['err']['error']) > 0) {
-                $isValitdated = false;
-                echo '<pre>';
-                print_r($validateImage['err']['error'] ?? 'none');
-                echo '</pre>';
-            } else {
-                if (count($validateImage['err']['size']) > 0) {
-                    $isValitdated = false;
-                    echo '<pre>';
-                    print_r($validateImage['err']['size'] ?? 'none');
-                    echo '</pre>';
-                } else {
-                    if (count($validateImage['err']['name']) > 0) {
-                        $isValitdated = false;
-                        echo '<pre>';
-                        print_r($validateImage['err']['name'] ?? 'none');
-                        echo '</pre>';
-                    } else {
-                        echo '<pre>';
-                        print_r($validateImage['uploadFile'] ?? 'none');
-                        echo '</pre>';
-                    }
-                }
-            }
+            print_r($validateImage);
+            $isValidated = false;
         }
 
-
+        if ($isValidated) {
+            print_r($uploadFile);
+        }
 
         die;
     }
 
     /**
-     * Validate iamge
+     * Lấy thông tin ảnh
+     * 
+     * @param array $file
+     * 
+     * @return array
+     */
+    public function getImageInformation($file)
+    {
+        $uploadFile = [];
+        foreach ($file['name'] as $index => $value) {
+            $uploadFile[$index]['file_name'] = md5($_SESSION['user']['id'] . $index . $value . date('d-m-Y h:i:s')) . '.png';
+        }
+
+        foreach ($file['tmp_name'] as $index => $value) {
+            $uploadFile[$index]['tmp_name'] = $value;
+        }
+
+        return $uploadFile;
+    }
+
+    /**
+     * Validate image
      * 
      * @param array $file
      * 
@@ -148,7 +144,6 @@ class Post extends Model
     public function validateImage($file)
     {
         $err = [];
-        $uploadFile = [];
         $acceptableExtensions = ['jpg', 'jpeg', 'png'];
         $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
 
@@ -165,19 +160,13 @@ class Post extends Model
                 $fileExtension = pathinfo($value, PATHINFO_EXTENSION);
                 if (!in_array($fileExtension, $acceptableExtensions)) {
                     $err['name'][$index] = 'Vui lòng chọn đúng định dạng ảnh';
-                } else {
-                    $uploadFile[$index]['file_name'] = md5($_SESSION['user']['id'] . $index . $value . date('d-m-Y h:i:s')) . '.png';
                 }
-            }
-
-            foreach ($file['tmp_name'] as $index => $value) {
-                $uploadFile[$index]['tmp_name'] = $value;
             }
 
             $err['size'] = [];
             foreach ($file['size'] as $index => $value) {
                 if ($value > 3145728) {
-                    $err['size'][$index] = 'Vui lòng chọn ảnh dưới 3MB';
+                    $err['size'][$index] = 'Vui lòng chọn file dưới 3MB';
                 }
             }
 
@@ -186,10 +175,7 @@ class Post extends Model
             }
         }
 
-        return [
-            'err' => $err,
-            'uploadFile' => $uploadFile
-        ];
+        return $err;
     }
 
     /**

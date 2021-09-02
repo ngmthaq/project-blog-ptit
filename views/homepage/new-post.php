@@ -17,7 +17,7 @@
                 <div class="form-row">
                     <div class="form-group col-6">
                         <label for="category">Danh mục</label>
-                        <select name="category" id="category" class="form-control">
+                        <select name="category_id" id="category_id" class="form-control">
                             <option value="">Chọn danh mục ...</option>
                             <?php foreach ($categories as $category) : ?>
                                 <option value="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></option>

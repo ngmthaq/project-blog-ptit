@@ -85,6 +85,15 @@
                     <p>
                         <a href="#!" class="text-reset">Help</a>
                     </p>
+                    <?php if (empty($_SESSION['user'])) : ?>
+                        <p>
+                            <a  class="text-reset" href="index.php?controller=admin">Login</a>
+                        </p>
+                    <?php else : ?>
+                        <p>
+                            <a  class="text-reset" href="index.php?controller=admin&action=manager">Manager</a>
+                        </p>
+                    <?php endif; ?>
                 </div>
                 <!-- Grid column -->
 
