@@ -5,6 +5,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css">
 <link rel="stylesheet" href="./public/vendor/owlcarousel/dist/assets/owl.carousel.min.css?v=<?php echo time(); ?>">
 <link rel="stylesheet" href="./public/vendor/owlcarousel/dist/assets/owl.theme.default.min.css?v=<?php echo time(); ?>">
 <link rel="stylesheet" href="./public/vendor/bootstrap/css/bootstrap.min.css?v=<?php echo time(); ?>">

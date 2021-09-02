@@ -9,21 +9,38 @@
 <script src="./public/js/SpinButton.js?v=<?php echo time(); ?>"></script>
 <script src="./public/vendor/owlcarousel/dist/owl.carousel.min.js?v=<?php echo time(); ?>"></script>
 <script src="./public/js/main.js?v=<?php echo time(); ?>"></script>
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
+
+<script type="text/javascript">
+    // Map API
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([105.7870061, 20.980955]),
+            zoom: 17,
+        })
+    });
+</script>
+
 <script>
     $(function() {
-        $('a[href="#subscribe"]').click(function () {
+        $('a[href="#subscribe"]').click(function() {
             $('.open-sidebar').click();
             $('input#sub-email').focus();
         })
 
-        $('#category-header').hover(function () {
-                // over
-                $('.category-box').css('display', 'block');
-            }, function () {
-                // out
-                $('.category-box').css('display', 'none');
-            }
-        );
+        $('#category-header').hover(function() {
+            // over
+            $('.category-box').css('display', 'block');
+        }, function() {
+            // out
+            $('.category-box').css('display', 'none');
+        });
 
         $('#categories-list').click(function() {
             $('.categories-list').slideToggle();
@@ -107,5 +124,4 @@
             }
         }
     })
-
 </script>

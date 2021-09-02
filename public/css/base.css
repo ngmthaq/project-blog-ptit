@@ -78,7 +78,7 @@ header {
     font-weight: 400;
 }
 
-.nav-list li >a::after {
+.nav-list li>a::after {
     position: absolute;
     content: '';
     background-color: var(--main-color);
@@ -90,13 +90,13 @@ header {
     transition: all .1s ease-in-out;
 }
 
-.nav-list li >a.my-active {
+.nav-list li>a.my-active {
     position: relative;
     color: var(--main-color);
     /* border-bottom: 2.5px solid var(--main-color); */
 }
 
-.nav-list li >a.my-active::after {
+.nav-list li>a.my-active::after {
     position: absolute;
     content: '';
     background-color: var(--main-color);
@@ -107,11 +107,11 @@ header {
     transform: scaleX(1);
 }
 
-.nav-list li >a:hover {
+.nav-list li>a:hover {
     color: var(--main-color);
 }
 
-.nav-list li >a:hover::after {
+.nav-list li>a:hover::after {
     transform: scaleX(1);
 }
 
@@ -559,4 +559,9 @@ header {
 
 .category-box a:hover {
     color: #19c3dd;
+}
+
+.map {
+    height: 400px;
+    width: 100%;
 }
