@@ -331,6 +331,24 @@
     -webkit-line-clamp: 4;
 }
 
+.title-posts p {
+    line-height: 30px;
+    max-height: 90px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.subtitle-posts p {
+    line-height: 25px;
+    height: 100px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
 .subtitle-homepage a {
     color: inherit !important;
 }

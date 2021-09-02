@@ -565,3 +565,16 @@ header {
     height: 400px;
     width: 100%;
 }
+
+.posts-box .card {
+    height: 640px;
+}
+
+.posts-box .card .img {
+    height: 320px;
+}
+
+.posts-box .card .img img {
+    height: 100%;
+    object-fit: cover;
+}

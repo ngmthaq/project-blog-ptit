@@ -32,7 +32,6 @@
     <script>
         $(function() {
             $(window).scroll(function() {
-                console.log($(this).scrollTop());
                 $('test').css('top', 'calc(40% + ' + $(this).scrollTop() * 1.1 + 'px)');
             });
         })

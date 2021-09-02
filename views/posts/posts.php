@@ -59,7 +59,9 @@
                             <?php foreach ($posts as $post) : ?>
                                 <div class="col-xl-4 col-md-6 col-12 mb-4">
                                     <div class="card">
-                                        <img width="100%" src="<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>" alt="<?php echo $post['id'] ?>" class="card-img-top">
+                                        <div class="img">
+                                            <img width="100%" src="<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>" alt="<?php echo $post['id'] ?>" class="card-img-top">
+                                        </div>
                                         <div class="card-body">
                                             <a href="index.php?action=posts&category=<?php echo $post['category_id'] ?>" class="card-text">
                                                 <small class="text-muted">
@@ -67,9 +69,11 @@
                                                 </small>
                                             </a>
                                             <a href="#" class="text-reset mt-1">
-                                                <h5 class="card-title"><?php echo $post['title'] ?></h5>
+                                                <h5 class="card-title title-posts"><?php echo $post['title'] ?></h5>
                                             </a>
-                                            <p class="card-text text-justify"><?php echo $post['subtitle'] ?></p>
+                                            <div class="card-text text-justify subtitle-posts">
+                                                <?php echo $post['subtitle'] ?>
+                                            </div>
                                             <p class="card-text">
                                                 <small class="text-muted">
                                                     Post at <?php echo date('d-m-Y', strtotime($post['date'])) ?> by <?php echo $post['user'] ?>
