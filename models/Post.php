@@ -90,10 +90,11 @@ class Post extends Model
     {
         echo "<pre>";
 
+        $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
         $isValidated = true;
 
         $validateText = $this->validateText($post);
-        $validateImage = $this->validateImage($file);
+        $validateImage = $this->validateImage($file, $uploadFileDirectory);
         $uploadFile = $this->getImageInformation($file);
 
         if (count($validateText) > 0) {
@@ -101,13 +102,54 @@ class Post extends Model
             $isValidated = false;
         }
 
-        if (count($validateImage) > 0) {
-            print_r($validateImage);
+        if (count($validateImage['error']) > 0) {
+            print_r($validateImage['error']);
             $isValidated = false;
+        } else {
+            if (count($validateImage['name']) > 0) {
+                print_r($validateImage['name']);
+                $isValidated = false;
+            }
+
+            if (count($validateImage['size']) > 0) {
+                print_r($validateImage['size']);
+                $isValidated = false;
+            }
         }
 
         if ($isValidated) {
             print_r($uploadFile);
+            $category_id = trim($_POST['category_id']);
+            $user_id = $_SESSION['user']['id'];
+            $title = trim($_POST['title']);
+            $subtitle = trim($_POST['subtitle']);
+            $paragraph_1 = trim($_POST['paragraph_1']);
+            $paragraph_2 = trim($_POST['paragraph_2']);
+            $paragraph_3 = trim($_POST['paragraph_3']);
+            $date = $_POST['date'] != "" ? $_POST['date'] : date('Y-m-d');
+            $file_path = trim('./' . $uploadFileDirectory);
+
+            foreach ($uploadFile as $file) {
+                $file_name = $file['file_name'];
+                $sql = "INSERT INTO `posts` (`id`, `category_id`, `user_id`, `title`, `subtitle`, `paragraph_1`, `paragraph_2`, `paragraph_3`, `cover_path`, `cover_name`, `date`) 
+                    VALUES (NULL, $category_id, $user_id, '$title', '$subtitle', '$paragraph_1', '$paragraph_2', '$paragraph_3', '$file_path', '$file_name', '$date')";
+                $newPost = $this->conn->query($sql);
+                break;
+            }
+
+            foreach ($uploadFile as $file) {
+                move_uploaded_file($file['tmp_name'], $uploadFileDirectory . MY_DIRECTORY_SEPARATOR . $file['file_name']);
+                $file_name = $file['file_name'];
+                if ($newPost) {
+                    $lastPostId = $this->getLastPostId();
+                    $img_sql =  "INSERT INTO `post_image` (`id`, `post_id`, `img_path`, `img_name`) 
+                        VALUES (NULL, $user_id, '$file_path', '$file_name')";
+                    $postImg = $this->conn->query($img_sql);
+                    if ($postImg) {
+                        header('location: index.php?controller=admin&action=manager');
+                    }
+                }
+            }
         }
 
         die;
@@ -124,7 +166,7 @@ class Post extends Model
     {
         $uploadFile = [];
         foreach ($file['name'] as $index => $value) {
-            $uploadFile[$index]['file_name'] = md5($_SESSION['user']['id'] . $index . $value . date('d-m-Y h:i:s')) . '.png';
+            $uploadFile[$index]['file_name'] = md5('user_' . $_SESSION['user']['id'] . '_img_' . $index . '_name_' . $value . '_upload_at_' . date('d-m-Y h:i:s')) . '.png';
         }
 
         foreach ($file['tmp_name'] as $index => $value) {
@@ -141,11 +183,10 @@ class Post extends Model
      * 
      * @return array
      */
-    public function validateImage($file)
+    public function validateImage($file, $uploadFileDirectory)
     {
         $err = [];
         $acceptableExtensions = ['jpg', 'jpeg', 'png'];
-        $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
 
         $err['error'] = [];
         foreach ($file['error'] as $index => $value) {
@@ -189,6 +230,9 @@ class Post extends Model
     {
         $err = [];
         foreach ($post as $key => $value) {
+            if ($key == 'date') {
+                break;
+            }
             if (trim($value) == '') {
                 $err[$key] = "Vui lòng nhập trường này";
             }
@@ -197,11 +241,11 @@ class Post extends Model
     }
 
     /**
-     * Lấy bài viết gần nhất
+     * Lấy id bài viết gần nhất
      * 
      * @return int
      */
-    public function getLastPost()
+    public function getLastPostId()
     {
         $sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 1';
         $result = $this->conn->query($sql);

@@ -67,7 +67,7 @@
                                                 </small>
                                             </a>
                                             <a href="#" class="text-reset mt-1">
-                                                <h5 class="card-title text-justify"><?php echo $post['title'] ?></h5>
+                                                <h5 class="card-title"><?php echo $post['title'] ?></h5>
                                             </a>
                                             <p class="card-text text-justify"><?php echo $post['subtitle'] ?></p>
                                             <p class="card-text">

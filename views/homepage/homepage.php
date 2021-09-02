@@ -32,26 +32,26 @@
                             <?php $i++; ?>
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="post <?php echo ($i > 3) ? 'd-none d-md-flex' : '' ?>" style="background-image: url('<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>');">
-                                    <a href="#" class="post-content text-decoration-none text-center d-none d-lg-flex">
-                                        <h5><?php echo $post['title'] ?></h5>
-                                        <p><span>Homestay</span> <span>|</span> <span><?php echo $post['category'] ?></span></p>
-                                        <p>
+                                    <div class="post-content text-decoration-none text-center d-none d-lg-flex">
+                                        <h5><a href="#" class="title-homepage text-reset"><?php echo $post['title'] ?></a></h5>
+                                        <p><?php echo $post['category'] ?></p>
+                                        <div class="subtitle-homepage">
                                             <?php echo $post['subtitle'] ?>
-                                        </p>
-                                        <p>
-                                            <small>Post at <?php echo $post['date'] ?> by <?php echo $post['user'] ?></small>
-                                        </p>
-                                    </a>
-                                    <a href="#" class="post-content text-decoration-none text-center d-flex d-lg-none" style="background-color: rgba(0, 0, 0, 0.7); color: #f5f5f5;">
-                                        <h5><?php echo $post['title'] ?></h5>
-                                        <p><span>Homestay</span> <span>|</span> <span><?php echo $post['category'] ?></span></p>
-                                        <p>
-                                            <?php echo $post['subtitle'] ?>
-                                        </p>
+                                        </div>
                                         <p>
                                             <small>Post at <?php echo date('d-m-Y', strtotime($post['date'])) ?> by <?php echo $post['user'] ?></small>
                                         </p>
-                                    </a>
+                                    </div>
+                                    <div class="post-content text-decoration-none text-center d-flex d-lg-none" style="background-color: rgba(0, 0, 0, 0.7); color: #f5f5f5;">
+                                        <h5><a href="#" class="title-homepage text-light"><?php echo $post['title'] ?></a></h5>
+                                        <p><?php echo $post['category'] ?></p>
+                                        <div class="subtitle-homepage">
+                                            <?php echo $post['subtitle'] ?>
+                                        </div>
+                                        <p>
+                                            <small>Post at <?php echo date('d-m-Y', strtotime($post['date'])) ?> by <?php echo $post['user'] ?></small>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -115,6 +115,7 @@
             $(window).scroll(function() {
                 $('test').css('top', 'calc(40% + ' + $(this).scrollTop() * 1.1 + 'px)');
             });
+
             $('.owl-carousel').owlCarousel({
                 loop: true,
                 margin: 20,
@@ -130,7 +131,9 @@
                         items: 3
                     }
                 }
-            })
+            });
+
+            $('.subtitle-homepage a').addClass('text-reset');
         })
     </script>
 </body>

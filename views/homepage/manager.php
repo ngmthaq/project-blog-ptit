@@ -30,7 +30,7 @@
         <div class="row no-gutter top-nav" style="background-color: #999;">
             <div class="col-6">Xin chào <?php echo $name ?></div>
             <div class="col-6 text-right">
-                <a href="index.php" class="btn btn-sm btn-light">Trang chủ</a>
+                <a href="index.php?action=posts" target="_blank" class="btn btn-sm btn-light">Trang chủ</a>
                 <a href="index.php?controller=admin&action=logout" class="btn btn-sm btn-dark">Đăng xuất</a>
             </div>
         </div>
