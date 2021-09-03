@@ -84,8 +84,12 @@ class AdminController
     public function newPost()
     {
         if (isset($_SESSION['user'])) {
+            $err = [];
             if (isset($_POST['submit'])) {
-                $post = $this->post->create($_POST, $_FILES['img']);
+                $err = $this->post->create($_POST, $_FILES['img']);
+                if (count($err) == 0) {
+                    header('location: index.php?controller=admin&action=manager');
+                }
             }
 
             $categories = $this->category->all();

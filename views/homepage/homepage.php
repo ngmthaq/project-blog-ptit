@@ -33,10 +33,10 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="post <?php echo ($i > 3) ? 'd-none d-md-flex' : '' ?>" style="background-image: url('<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>');">
                                     <div class="post-content text-decoration-none text-center d-none d-lg-flex">
-                                        <h5><a href="#" class="title-homepage text-reset"><?php echo $post['title'] ?></a></h5>
+                                        <h5><a href="#" class="title-homepage text-reset"><?php echo html_entity_decode($post['title']) ?></a></h5>
                                         <p><?php echo $post['category'] ?></p>
                                         <div class="subtitle-homepage">
-                                            <?php echo $post['subtitle'] ?>
+                                            <?php echo html_entity_decode($post['subtitle']) ?>
                                         </div>
                                         <p>
                                             <small>Post at <?php echo date('d-m-Y', strtotime($post['date'])) ?> by <?php echo $post['user'] ?></small>

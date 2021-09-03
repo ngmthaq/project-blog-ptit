@@ -23,6 +23,7 @@
                                 <option value="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?php echo (isset($err['category_id'])) ? '<small class="text-danger d-block">'.$err['category_id'].'</small>' : '' ?>
                     </div>
                     <div class="form-group col-6">
                         <label for="date">Ngày đăng</label>
@@ -30,39 +31,111 @@
                     </div>
                 </div>
 
-                <label for="title">Tiêu đề</label>
-                <textarea name="title" id="title"></textarea>
+                <fieldset>
+                    <legend>Mở bài</legend>
+                    <label for="title">Tiêu đề 1</label>
+                    <textarea name="title" id="title"></textarea>
+                    <?php echo (isset($err['title'])) ? '<small class="text-danger d-block">'.$err['title'].'</small>' : '' ?>
 
-                <label for="subtitle">Tiêu đề phụ</label>
-                <textarea name="subtitle" id="subtitle"></textarea>
-                <br>
+                    <label for="subtitle">Tiêu đề phụ</label>
+                    <textarea name="subtitle" id="subtitle"></textarea>
+                    <?php echo (isset($err['subtitle'])) ? '<small class="text-danger d-block">'.$err['subtitle'].'</small>' : '' ?>
+                    <br>
 
-                <div class="form-group">
-                    <label for="img_1">Ảnh 1</label><br>
-                    <input type="file" name="img[]" id="img_1" class="form-controller-file">
-                </div>
+                    <div class="form-group">
+                        <label for="cover">Ảnh bìa</label><br>
+                        <input type="file" name="img[]" id="cover" class="form-controller-file">
+                        <?php echo (isset($err['img_0'])) ? '<small class="text-danger d-block">'.$err['img_0'].'</small>' : '' ?>
+                    </div>
+                </fieldset>
 
-                <label for="paragraph_1">Đoạn 1</label>
-                <textarea name="paragraph_1" id="paragraph_1"></textarea>
-                <br>
+                <fieldset>
+                    <legend>Thân bài</legend>
 
-                <div class="form-group">
-                    <label for="img_2">Ảnh 2</label><br>
-                    <input type="file" name="img[]" id="img_2" class="form-controller-file">
-                </div>
+                    <!-- HEADING 1 -->
+                    <fieldset>
+                        <legend><small>Đoạn 1</small></legend>
+                        <label for="heading_1">Tiêu đề:</label>
+                        <textarea name="heading_1" id="heading_1"></textarea>
+                        <?php echo (isset($err['heading_1'])) ? '<small class="text-danger d-block">'.$err['heading_1'].'</small>' : '' ?>
+                        <br>
 
-                <label for="paragraph_2">Đoạn 2</label>
-                <textarea name="paragraph_2" id="paragraph_2"></textarea>
-                <br>
+                        <label for="paragraph_1_1">Content:</label>
+                        <textarea name="paragraph_1_1" id="paragraph_1_1"></textarea>
+                        <?php echo (isset($err['paragraph_1_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_1_1'].'</small>' : '' ?>
+                        <br>
 
-                <div class="form-group">
-                    <label for="img_3">Ảnh 3</label><br>
-                    <input type="file" name="img[]" id="img_3" class="form-controller-file">
-                </div>
+                        <div class="form-group">
+                            <label for="img_1">Ảnh</label><br>
+                            <input type="file" name="img[]" id="img_1" class="form-controller-file">
+                            <?php echo (isset($err['img_1'])) ? '<small class="text-danger d-block">'.$err['img_1'].'</small>' : '' ?>
+                        </div>
 
-                <label for="paragraph_3">Đoạn 3</label>
-                <textarea name="paragraph_3" id="paragraph_3"></textarea>
-                <br>
+                        <label for="paragraph_1_2">Content:</label>
+                        <textarea name="paragraph_1_2" id="paragraph_1_2"></textarea>
+                        <?php echo (isset($err['paragraph_1_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_1_2'].'</small>' : '' ?>
+                        <br>
+                    </fieldset>
+
+                    <!-- HEADING 2 -->
+                    <fieldset>
+                        <legend><small>Đoạn 2</small></legend>
+                        <label for="heading_2">Tiêu đề:</label>
+                        <textarea name="heading_2" id="heading_2"></textarea>
+                        <?php echo (isset($err['heading_2'])) ? '<small class="text-danger d-block">'.$err['heading_2'].'</small>' : '' ?>
+                        <br>
+
+                        <label for="paragraph_2_1">Content:</label>
+                        <textarea name="paragraph_2_1" id="paragraph_2_1"></textarea>
+                        <?php echo (isset($err['paragraph_2_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_2_1'].'</small>' : '' ?>
+                        <br>
+
+                        <div class="form-group">
+                            <label for="img_2">Ảnh</label><br>
+                            <input type="file" name="img[]" id="img_2" class="form-controller-file">
+                            <?php echo (isset($err['img_2'])) ? '<small class="text-danger d-block">'.$err['img_2'].'</small>' : '' ?>
+                        </div>
+
+                        <label for="paragraph_2_2">Content:</label>
+                        <textarea name="paragraph_2_2" id="paragraph_2_2"></textarea>
+                        <?php echo (isset($err['paragraph_2_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_2_2'].'</small>' : '' ?>
+                        <br>
+                    </fieldset>
+
+                    <!-- HEADING 3 -->
+                    <fieldset>
+                        <legend><small>Đoạn 3</small></legend>
+                        <label for="heading_3">Tiêu đề:</label>
+                        <textarea name="heading_3" id="heading_3"></textarea>
+                        <?php echo (isset($err['heading_3'])) ? '<small class="text-danger d-block">'.$err['heading_3'].'</small>' : '' ?>
+                        <br>
+
+                        <label for="paragraph_3_1">Content:</label>
+                        <textarea name="paragraph_3_1" id="paragraph_3_1"></textarea>
+                        <?php echo (isset($err['paragraph_3_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_3_1'].'</small>' : '' ?>
+                        <br>
+
+                        <div class="form-group">
+                            <label for="img_3">Ảnh</label><br>
+                            <input type="file" name="img[]" id="img_3" class="form-controller-file">
+                            <?php echo (isset($err['img_3'])) ? '<small class="text-danger d-block">'.$err['img_3'].'</small>' : '' ?>
+                        </div>
+
+                        <label for="paragraph_3_2">Content:</label>
+                        <textarea name="paragraph_3_2" id="paragraph_3_2"></textarea>
+                        <?php echo (isset($err['paragraph_3_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_3_2'].'</small>' : '' ?>
+                        <br>
+                    </fieldset>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Kết bài</legend>
+                    <label for="last_paragraph">Content</label>
+                    <textarea name="last_paragraph" id="last_paragraph"></textarea>
+                    <?php echo (isset($err['last_paragraph'])) ? '<small class="text-danger d-block">'.$err['last_paragraph'].'</small>' : '' ?>
+                    <br>
+                </fieldset>
+
                 <button type="submit" name="submit" class="btn btn-sm btn-primary mb-2" value="submit">Đăng bài</button>
             </form>
         </div>
@@ -80,17 +153,52 @@
                 console.error(error);
             });
         ClassicEditor
-            .create(document.querySelector('#paragraph_1'))
+            .create(document.querySelector('#heading_1'))
             .catch(error => {
                 console.error(error);
             });
         ClassicEditor
-            .create(document.querySelector('#paragraph_2'))
+            .create(document.querySelector('#heading_2'))
             .catch(error => {
                 console.error(error);
             });
         ClassicEditor
-            .create(document.querySelector('#paragraph_3'))
+            .create(document.querySelector('#heading_3'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_1_1'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_1_2'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_2_1'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_2_2'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_3_1'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#paragraph_3_2'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#last_paragraph'))
             .catch(error => {
                 console.error(error);
             });

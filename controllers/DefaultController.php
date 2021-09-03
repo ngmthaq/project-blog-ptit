@@ -2,16 +2,19 @@
 
 require_once('./models/Category.php');
 require_once('./models/Post.php');
+require_once('./models/PostImage.php');
 
 class DefaultController
 {
     protected $category;
     protected $post;
+    protected $postImage;
 
     public function __construct()
     {
         $this->category = new Category();
         $this->post = new Post();
+        $this->postImage = new PostImage();
     }
 
     /**
@@ -66,6 +69,21 @@ class DefaultController
         $whichPage = 'posts';
         $category_id = $_GET['category'] ?? 0;
         require_once('./views/posts/posts.php');
+    }
+
+    /**
+     * Hiển thị chi tiết bài post
+     * 
+     * @return void
+     */
+    public function post()
+    {
+        $post = $this->post->show($_GET['id']);
+        $images = $this->postImage->show($_GET['id']);
+
+        echo "<pre>";
+        print_r($post);
+        print_r($images);
     }
 
     /**

@@ -88,92 +88,75 @@ class Post extends Model
      */
     public function create($post, $file)
     {
-        echo "<pre>";
-
+        array_pop($post);
         $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
+        $textErr = $this->validateText($post);
+        $img = $this->validateImage($file, $uploadFileDirectory);
+
+        $err = [];
+        $err = array_merge($err, $textErr, $img['err']);
+
         $isValidated = true;
 
-        $validateText = $this->validateText($post);
-        $validateImage = $this->validateImage($file, $uploadFileDirectory);
-        $uploadFile = $this->getImageInformation($file);
-
-        if (count($validateText) > 0) {
-            print_r($validateText);
+        if (count($err) > 0) {
             $isValidated = false;
-        }
-
-        if (count($validateImage['error']) > 0) {
-            print_r($validateImage['error']);
-            $isValidated = false;
-        } else {
-            if (count($validateImage['name']) > 0) {
-                print_r($validateImage['name']);
-                $isValidated = false;
-            }
-
-            if (count($validateImage['size']) > 0) {
-                print_r($validateImage['size']);
-                $isValidated = false;
-            }
+            return $err;
         }
 
         if ($isValidated) {
-            print_r($uploadFile);
-            $category_id = trim($_POST['category_id']);
-            $user_id = $_SESSION['user']['id'];
-            $title = trim($_POST['title']);
-            $subtitle = trim($_POST['subtitle']);
-            $paragraph_1 = trim($_POST['paragraph_1']);
-            $paragraph_2 = trim($_POST['paragraph_2']);
-            $paragraph_3 = trim($_POST['paragraph_3']);
-            $date = $_POST['date'] != "" ? $_POST['date'] : date('Y-m-d');
-            $file_path = trim('./' . $uploadFileDirectory);
+            $keys = array_keys($post);
+            $values = array_values($post);
 
-            foreach ($uploadFile as $file) {
-                $file_name = $file['file_name'];
-                $sql = "INSERT INTO `posts` (`id`, `category_id`, `user_id`, `title`, `subtitle`, `paragraph_1`, `paragraph_2`, `paragraph_3`, `cover_path`, `cover_name`, `date`) 
-                    VALUES (NULL, $category_id, $user_id, '$title', '$subtitle', '$paragraph_1', '$paragraph_2', '$paragraph_3', '$file_path', '$file_name', '$date')";
-                $newPost = $this->conn->query($sql);
-                break;
-            }
+            $keys = array_map(function ($value) {
+                return "`" . $value . "`";
+            }, $keys);
 
-            foreach ($uploadFile as $file) {
-                move_uploaded_file($file['tmp_name'], $uploadFileDirectory . MY_DIRECTORY_SEPARATOR . $file['file_name']);
-                $file_name = $file['file_name'];
-                if ($newPost) {
-                    $lastPostId = $this->getLastPostId();
-                    $img_sql =  "INSERT INTO `post_image` (`id`, `post_id`, `img_path`, `img_name`) 
-                        VALUES (NULL, $user_id, '$file_path', '$file_name')";
-                    $postImg = $this->conn->query($img_sql);
-                    if ($postImg) {
-                        header('location: index.php?controller=admin&action=manager');
+            $values = array_map(function ($value) {
+                if ($value == "") {
+                    $value = date('Y-m-d');
+                }
+                return "'" . htmlentities($value) . "'";
+            }, $values);
+            
+            $keys = array_merge(
+                $keys,
+                [
+                    '`user_id`',
+                    '`cover_path`',
+                    '`cover_name`'
+                ]
+            );
+
+            $values = array_merge(
+                $values,
+                [
+                    "'" . $_SESSION['user']['id'] . "'",
+                    "'./" . $uploadFileDirectory . "'",
+                    "'" . $img['fileHandle'][0]['name'] . "'"
+                ]
+            );
+
+            $keys = implode(', ', $keys);
+            $values = implode(', ', $values);
+
+            $sql = "INSERT INTO `posts` ($keys) VALUES ($values)";
+            $newPost = $this->conn->query($sql);
+            if ($newPost) {
+                $lastPostId = $this->getLastPostId();
+                $img_path = "'./" . $uploadFileDirectory . "'";
+                foreach ($img['fileHandle'] as $img) {
+                    $img_tmp = $img['tmp'];
+                    $img_name = $img['name'];
+                    if ($img_tmp != 'nofile') {
+                        move_uploaded_file($img_tmp, $uploadFileDirectory . MY_DIRECTORY_SEPARATOR . $img_name);
                     }
+                    $img_sql = "INSERT INTO `post_image`
+                            VALUES (NULL, '$lastPostId', $img_path, '$img_name')";
+                    $newImg = $this->conn->query($img_sql);
                 }
             }
         }
-
-        die;
-    }
-
-    /**
-     * Lấy thông tin ảnh
-     * 
-     * @param array $file
-     * 
-     * @return array
-     */
-    public function getImageInformation($file)
-    {
-        $uploadFile = [];
-        foreach ($file['name'] as $index => $value) {
-            $uploadFile[$index]['file_name'] = md5('user_' . $_SESSION['user']['id'] . '_img_' . $index . '_name_' . $value . '_upload_at_' . date('d-m-Y h:i:s')) . '.png';
-        }
-
-        foreach ($file['tmp_name'] as $index => $value) {
-            $uploadFile[$index]['tmp_name'] = $value;
-        }
-
-        return $uploadFile;
+        return [];
     }
 
     /**
@@ -186,37 +169,34 @@ class Post extends Model
     public function validateImage($file, $uploadFileDirectory)
     {
         $err = [];
+        $fileHandle = [];
         $acceptableExtensions = ['jpg', 'jpeg', 'png'];
 
-        $err['error'] = [];
-        foreach ($file['error'] as $index => $value) {
-            if ($value != UPLOAD_ERR_OK) {
-                $err['error'][$index] = 'Thiếu ảnh hoặc tải ảnh lên không thành công';
-            }
+        if (!is_dir($uploadFileDirectory)) {
+            mkdir($uploadFileDirectory);
         }
 
-        if (count($err['error']) == 0) {
-            $err['name'] = [];
-            foreach ($file['name'] as $index => $value) {
-                $fileExtension = pathinfo($value, PATHINFO_EXTENSION);
+        foreach ($file['error'] as $index => $error) {
+            if ($error == UPLOAD_ERR_OK) {
+                $originalName = $file['name'][$index];
+                $fileExtension = pathinfo($originalName, PATHINFO_EXTENSION);
                 if (!in_array($fileExtension, $acceptableExtensions)) {
-                    $err['name'][$index] = 'Vui lòng chọn đúng định dạng ảnh';
+                    $err['img_' . $index] = "Vui lòng chọn đúng định dạng ảnh (png, jpg, jpeg)";
+                } else {
+                    $fileHandle[$index]['tmp'] = $file['tmp_name'][$index];
+                    $fileHandle[$index]['name'] = md5($_SESSION['user']['id'] . $index . $originalName . date('d-m-Y h:i:s')) . '.png';
                 }
-            }
-
-            $err['size'] = [];
-            foreach ($file['size'] as $index => $value) {
-                if ($value > 3145728) {
-                    $err['size'][$index] = 'Vui lòng chọn file dưới 3MB';
-                }
-            }
-
-            if (!is_dir($uploadFileDirectory)) {
-                mkdir($uploadFileDirectory);
+            } elseif ($error == UPLOAD_ERR_NO_FILE) {
+                $fileHandle[$index]['tmp'] = 'nofile';
+                $fileHandle[$index]['name'] = 'noname';
+            } else {
+                $err['img_' . $index] = 'Tải ảnh lên không thành công';
+                $fileHandle[$index]['tmp'] = 'nofile';
+                $fileHandle[$index]['name'] = 'noname';
             }
         }
 
-        return $err;
+        return compact('err', 'fileHandle');
     }
 
     /**
@@ -231,10 +211,10 @@ class Post extends Model
         $err = [];
         foreach ($post as $key => $value) {
             if ($key == 'date') {
-                break;
+                continue;
             }
-            if (trim($value) == '') {
-                $err[$key] = "Vui lòng nhập trường này";
+            if ($value == "") {
+                $err[$key] = 'Vui lòng nhập trường này';
             }
         }
         return $err;
@@ -252,5 +232,19 @@ class Post extends Model
         $post = $result->fetch_assoc();
         $id = $post['id'];
         return $id;
+    }
+
+    /**
+     * Lấy thông tin bài viết
+     * 
+     * @param int $id
+     * 
+     * @return array
+     */
+    public function show($id)
+    {
+        $sql = "SELECT * FROM posts WHERE id = $id";
+        $post = $this->conn->query($sql);
+        return $post->fetch_assoc();
     }
 }

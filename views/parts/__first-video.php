@@ -2,9 +2,9 @@
     <video src="public\assets\img\video-clound2.mp4" muted autoplay loop></video>
     <div class="black-layout"></div>
     <h1 class="logo">
-        <span>Technology</span>
-        <br>
-        <span class="sidebar-title">Blog</span>
+        <span>M2</span>
+        <!-- <br> -->
+        <span class="sidebar-title">Tech</span>
     </h1>
     <div class="container">
         <div class="row">

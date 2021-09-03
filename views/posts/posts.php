@@ -37,9 +37,9 @@
                                                 </small>
                                             </a>
                                             <a href="#" class="text-reset mt-1">
-                                                <h5 class="card-title"><?php echo $firstPost['title'] ?></h5>
+                                                <h5 class="card-title"><?php echo html_entity_decode($firstPost['title']) ?></h5>
                                             </a>
-                                            <p class="card-text"><?php echo $firstPost['subtitle'] ?></p>
+                                            <p class="card-text"><?php echo html_entity_decode($firstPost['subtitle']) ?></p>
                                             <p class="card-text">
                                                 <small class="text-muted">
                                                     Post at <?php echo date('d-m-Y', strtotime($firstPost['date'])) ?> by <?php echo $firstPost['user'] ?>
@@ -69,10 +69,10 @@
                                                 </small>
                                             </a>
                                             <a href="#" class="text-reset mt-1">
-                                                <h5 class="card-title title-posts"><?php echo $post['title'] ?></h5>
+                                                <h5 class="card-title title-posts"><?php echo html_entity_decode($post['title']) ?></h5>
                                             </a>
                                             <div class="card-text text-justify subtitle-posts">
-                                                <?php echo $post['subtitle'] ?>
+                                                <?php echo html_entity_decode($post['subtitle']) ?>
                                             </div>
                                             <p class="card-text">
                                                 <small class="text-muted">

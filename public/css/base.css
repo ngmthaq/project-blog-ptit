@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'Capture Smallz';
+    src: url('../assets/fonts/capture_smallz/Capsmall_clean.ttf');
+}
+
+fieldset {
+    border: solid 1px #000;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+legend {
+    display: inline-block;
+    width: unset;
+}
+
 /* Color */
 
 :root {
@@ -213,9 +229,9 @@ header {
 }
 
 .logo span {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Capture Smallz';
     font-size: 54px;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 
 .logo.logo-sm span {

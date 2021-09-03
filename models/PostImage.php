@@ -7,14 +7,16 @@ class PostImage extends Post
     protected $table = 'post_image';
 
     /**
-     * Thêm ảnh
+     * Lấy tất cả ảnh của 1 post
      * 
-     * @param array $param
+     * @param int $id
      * 
      * @return array
      */
-    public function addImages($param)
+    public function show($id)
     {
-        
+        $sql = "SELECT * FROM post_image WHERE post_id = $id";
+        $images = $this->conn->query($sql);
+        return $images->fetch_all(MYSQLI_ASSOC);
     }
 }

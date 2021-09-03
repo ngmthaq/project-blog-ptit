@@ -20,10 +20,10 @@
         <i class="fas fa-times"></i>
     </div>
     <h1 class="logo d-md-block d-none">
-        <span>Technology</span><span class="sidebar-title">Blog</span>
+        <span>M2</span><span class="sidebar-title">Tech</span>
     </h1>
     <h1 class="logo logo-sm d-block d-md-none">
-        <span>Technology</span><span class="sidebar-title">Blog</span>
+        <span>M2</span><span class="sidebar-title">Tech</span>
     </h1>
     <ul class="nav-sidebar">
         <li>
