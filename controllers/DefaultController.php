@@ -78,12 +78,18 @@ class DefaultController
      */
     public function post()
     {
+        $categories = $this->category->getCategoryAndAmountOfPost();
         $post = $this->post->show($_GET['id']);
+        $category_id = $post['category_id'] ?? 0;
+        $sixPosts = $this->post->getFirstSixPostInformation($category_id, $_GET['id']);
         $images = $this->postImage->show($_GET['id']);
+        $whichPage = 'posts';
 
-        echo "<pre>";
-        print_r($post);
-        print_r($images);
+        // echo "<pre>";
+        // print_r($post);
+        // print_r($images);
+
+        require_once('./views/posts/post.php');
     }
 
     /**

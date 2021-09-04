@@ -43,10 +43,10 @@
                                         </p>
                                     </div>
                                     <div class="post-content text-decoration-none text-center d-flex d-lg-none" style="background-color: rgba(0, 0, 0, 0.7); color: #f5f5f5;">
-                                        <h5><a href="#" class="title-homepage text-light"><?php echo $post['title'] ?></a></h5>
+                                        <h5><a href="#" class="title-homepage text-light"><?php echo html_entity_decode($post['title']) ?></a></h5>
                                         <p><?php echo $post['category'] ?></p>
                                         <div class="subtitle-homepage">
-                                            <?php echo $post['subtitle'] ?>
+                                            <?php echo html_entity_decode($post['subtitle']) ?>
                                         </div>
                                         <p>
                                             <small>Post at <?php echo date('d-m-Y', strtotime($post['date'])) ?> by <?php echo $post['user'] ?></small>

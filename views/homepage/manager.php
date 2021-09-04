@@ -75,10 +75,10 @@
                                         <th scope="row"><?php echo $post['id'] ?></th>
                                         <td><?php echo $post['category_id'] ?></td>
                                         <td><?php echo $post['user_id'] ?></td>
-                                        <td class='post-title'><?php echo $post['title'] ?></td>
+                                        <td class='post-title'><?php echo html_entity_decode($post['title']) ?></td>
                                         <td class='post-date'><?php echo date('d-m-Y', strtotime($post['date'])) ?></td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-outline-info">View</a>
+                                            <a target="_blank" href="index.php?action=post&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-info">View</a>
                                             <a href="#" class="btn btn-sm btn-outline-warning">Edit</a>
                                             <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>

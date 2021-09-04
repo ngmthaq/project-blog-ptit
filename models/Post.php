@@ -11,16 +11,30 @@ class Post extends Model
      * 
      * @return array
      */
-    public function getFirstSixPostInformation($category = null)
+    public function getFirstSixPostInformation($category = null, $notIn = null)
     {
+        $where = '';
+
+        $category_id = $category ?? null;
+
+        if ($category_id && $notIn) {
+            $where = " WHERE category_id = $category_id AND posts.id NOT IN($notIn)";
+        }
+
         $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
         INNER JOIN categories ON posts.category_id = categories.id 
         INNER JOIN users ON posts.user_id = users.id
+        $where
         ORDER BY date DESC
         LIMIT 6";
 
         $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+
+        if (isset($result->num_rows) && $result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        
+        return [];
     }
 
     /**
@@ -117,7 +131,7 @@ class Post extends Model
                 }
                 return "'" . htmlentities($value) . "'";
             }, $values);
-            
+
             $keys = array_merge(
                 $keys,
                 [
@@ -243,7 +257,10 @@ class Post extends Model
      */
     public function show($id)
     {
-        $sql = "SELECT * FROM posts WHERE id = $id";
+        $sql = "SELECT users.name as 'user', posts.*, categories.* FROM posts 
+        INNER JOIN categories ON posts.category_id = categories.id
+        INNER JOIN users ON posts.user_id = users.id 
+        WHERE posts.id = $id";
         $post = $this->conn->query($sql);
         return $post->fetch_assoc();
     }

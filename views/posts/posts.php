@@ -16,7 +16,20 @@
     <div class="main">
         <?php require_once('./views/parts/__header.php') ?>
 
-        <h1 class="post-title text-center">NEWEST</h1>
+        <h3 class="post-title text-center">Mới nhất</h3>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.php">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Bài viết</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 
         <div class="container-fluid">
             <div class="row">
@@ -26,8 +39,8 @@
                         <div class="first-post-box">
                             <div class="card my-3">
                                 <div class="row no-gutters">
-                                    <div class="col-md-4" style="padding: 1.25rem 0 1.25rem 1.25rem;">
-                                        <img style="border-radius: 10px;" width="100%" src="<?php echo $firstPost['cover_path'] . MY_DIRECTORY_SEPARATOR . $firstPost['cover_name'] ?>" alt="<?php echo $firstPost['id'] ?>">
+                                    <div class="col-md-4" style="padding: 1.25rem 0 1.25rem 1.25rem; height: 300px;">
+                                        <img style="border-radius: 10px; height: 100%; object-fit: cover;" width="100%" src="<?php echo $firstPost['cover_path'] . MY_DIRECTORY_SEPARATOR . $firstPost['cover_name'] ?>" alt="<?php echo $firstPost['id'] ?>">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
@@ -36,7 +49,7 @@
                                                     <?php echo $firstPost['category'] ?>
                                                 </small>
                                             </a>
-                                            <a href="#" class="text-reset mt-1">
+                                            <a href="index.php?action=post&id=<?php echo $firstPost['id'] ?>" class="text-reset mt-1">
                                                 <h5 class="card-title"><?php echo html_entity_decode($firstPost['title']) ?></h5>
                                             </a>
                                             <p class="card-text"><?php echo html_entity_decode($firstPost['subtitle']) ?></p>
@@ -68,10 +81,10 @@
                                                     <?php echo $post['category'] ?>
                                                 </small>
                                             </a>
-                                            <a href="#" class="text-reset mt-1">
+                                            <a href="index.php?action=post&id=<?php echo $post['id'] ?>" class="text-reset mt-1">
                                                 <h5 class="card-title title-posts"><?php echo html_entity_decode($post['title']) ?></h5>
                                             </a>
-                                            <div class="card-text text-justify subtitle-posts">
+                                            <div class="card-text subtitle-posts">
                                                 <?php echo html_entity_decode($post['subtitle']) ?>
                                             </div>
                                             <p class="card-text">
