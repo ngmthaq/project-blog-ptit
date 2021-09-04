@@ -85,17 +85,13 @@ class DefaultController
         $images = $this->postImage->show($_GET['id']);
         $whichPage = 'posts';
 
-        // echo "<pre>";
-        // print_r($post);
-        // print_r($images);
-
         require_once('./views/posts/post.php');
     }
 
     /**
      * Ajax load more post
      * 
-     * @return void
+     * @return json
      */
     public function loadMorePosts()
     {

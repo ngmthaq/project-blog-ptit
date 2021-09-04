@@ -100,6 +100,20 @@ class AdminController
     }
 
     /**
+     * Xoá bài viết
+     */
+    public function delete()
+    {
+        $isDeleted = $this->post->destroy($_GET['id']);
+        if ($isDeleted) {
+            header('location: index.php?controller=admin&action=manager');
+        } else {
+            print_r("Xoá không thành công vui lòng kiểm tra lại, tự động chuyển trang sau 3 giây");
+            header("refresh:3;url=index.php?controller=admin&action=manager");
+        }
+    }
+
+    /**
      * Logout
      * 
      * @return void

@@ -81,8 +81,8 @@
                                             <p><?php echo $category['name'] ?></p>
                                             <p>
                                                 <small>
-                                                    <?php echo $category['posts'] ?>
-                                                    <?php echo $category['posts'] > 1 ? 'posts' : 'post' ?>
+                                                    <?php echo $category['posts'] - $category['deleted'] ?>
+                                                    <?php echo $category['posts'] - $category['deleted'] > 1 ? 'posts' : 'post' ?>
                                                 </small>
                                             </p>
                                         </a>

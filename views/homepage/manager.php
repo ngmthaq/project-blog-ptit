@@ -60,7 +60,6 @@
                     <table class="table">
                         <thead class='thead-dark'>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Danh mục</th>
                                 <th scope="col">Người đăng</th>
                                 <th scope="col">Tiêu đề</th>
@@ -72,15 +71,18 @@
                             <?php if (count($posts) > 0) : ?>
                                 <?php foreach ($posts as $post) : ?>
                                     <tr class='post-row'>
-                                        <th scope="row"><?php echo $post['id'] ?></th>
-                                        <td><?php echo $post['category_id'] ?></td>
-                                        <td><?php echo $post['user_id'] ?></td>
+                                        <td><?php echo $post['category'] ?></td>
+                                        <td><?php echo $post['user'] ?></td>
                                         <td class='post-title'><?php echo html_entity_decode($post['title']) ?></td>
                                         <td class='post-date'><?php echo date('d-m-Y', strtotime($post['date'])) ?></td>
                                         <td>
-                                            <a target="_blank" href="index.php?action=post&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-info">View</a>
-                                            <a href="#" class="btn btn-sm btn-outline-warning">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                                            <?php if (isset($post['deleted_at'])) : ?>
+                                                <span class="btn btn-sm btn-secondary">Đã xoá</span>
+                                            <?php else : ?>
+                                                <a target="_blank" href="index.php?action=post&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-info">Xem</a>
+                                                <a href="#" class="btn btn-sm btn-outline-warning">Sửa</a>
+                                                <a href="index.php?controller=admin&action=delete&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn muốn xoá bài viết này?')">Xoá</a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

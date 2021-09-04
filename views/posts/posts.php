@@ -105,8 +105,12 @@
                         <ul class="post-categories">
                             <?php foreach ($categories as $category) : ?>
                                 <li>
-                                    <a <?php echo ($category['id'] == $category_id) ? 'style="color:#19c3dd;"' : '' ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
-                                    <small><?php echo ($category['posts'] > 99) ? '99+' : $category['posts'] ?> <?php echo ($category['posts'] > 1) ? 'posts' : 'post' ?></small>
+                                    <a <?php echo ($category['id'] == $category_id) ? 'style="color:#19c3dd;"' : '' ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>">
+                                        <?php echo $category['name'] ?>
+                                    </a>
+                                    <small>
+                                        <?php echo ($category['posts'] - $category['deleted'] > 99) ? '99+' : $category['posts'] - $category['deleted'] ?> <?php echo ($category['posts'] - $category['deleted'] > 1) ? 'posts' : 'post' ?>
+                                    </small>
                                 </li>
                             <?php endforeach; ?>
                             <li>
@@ -115,7 +119,7 @@
                                     <?php
                                     $totalPosts = 0;
                                     foreach ($categories as $category) {
-                                        $totalPosts += $category['posts'];
+                                        $totalPosts += ($category['posts'] - $category['deleted']);
                                     }
                                     echo ($totalPosts > 99) ? '99+' : $totalPosts;
                                     echo ($totalPosts > 1) ? ' posts' : ' post';

@@ -7,18 +7,33 @@ class Post extends Model
     protected $table = 'posts';
 
     /**
+     * Lấy post chưa bị soft delete
+     * 
+     * @return array
+     */
+    public function all()
+    {
+        $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM posts 
+            INNER JOIN categories ON posts.category_id = categories.id
+            INNER JOIN users ON posts.user_id = users.id
+            ORDER BY date DESC";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Get first six posts
      * 
      * @return array
      */
     public function getFirstSixPostInformation($category = null, $notIn = null)
     {
-        $where = '';
+        $where = 'WHERE posts.deleted_at IS NULL';
 
         $category_id = $category ?? null;
 
         if ($category_id && $notIn) {
-            $where = " WHERE category_id = $category_id AND posts.id NOT IN($notIn)";
+            $where .= " AND category_id = $category_id AND posts.id NOT IN($notIn)  ";
         }
 
         $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
@@ -33,7 +48,7 @@ class Post extends Model
         if (isset($result->num_rows) && $result->num_rows > 0) {
             return $result->fetch_all(MYSQLI_ASSOC);
         }
-        
+
         return [];
     }
 
@@ -44,12 +59,12 @@ class Post extends Model
      */
     public function getFirstPostInformation($param, $category = null)
     {
-        $where = '';
+        $where = 'WHERE posts.deleted_at IS NULL';
 
         $category_id = $param['category'] ?? null;
 
         if ($category_id) {
-            $where = " WHERE category_id = $category_id ";
+            $where .= " AND category_id = $category_id ";
         }
 
         $sql = "SELECT posts.*, categories.name AS 'category', users.name AS 'user' FROM `posts` 
@@ -72,12 +87,12 @@ class Post extends Model
      */
     public function getNextSixPostInformation($param, $category = null)
     {
-        $where = '';
+        $where = 'WHERE posts.deleted_at IS NULL';
 
         $category_id = $param['category'] ?? null;
 
         if ($category_id) {
-            $where = " WHERE category_id = $category_id ";
+            $where .= " AND category_id = $category_id ";
         }
 
         $page = $param['page'] ?? 1;
@@ -241,7 +256,7 @@ class Post extends Model
      */
     public function getLastPostId()
     {
-        $sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 1';
+        $sql = 'SELECT * FROM posts WHERE posts.deleted_at IS NULL ORDER BY id DESC LIMIT 1';
         $result = $this->conn->query($sql);
         $post = $result->fetch_assoc();
         $id = $post['id'];
@@ -260,8 +275,22 @@ class Post extends Model
         $sql = "SELECT users.name as 'user', posts.*, categories.* FROM posts 
         INNER JOIN categories ON posts.category_id = categories.id
         INNER JOIN users ON posts.user_id = users.id 
-        WHERE posts.id = $id";
+        WHERE posts.id = $id AND posts.deleted_at IS NULL";
         $post = $this->conn->query($sql);
         return $post->fetch_assoc();
+    }
+
+    /**
+     * Xoá mềm bài viết
+     * 
+     * @param int $id
+     * 
+     * @return void
+     */
+    public function destroy($id)
+    {
+        $time = date("Y-m-d H:i:s");
+        $sql = "UPDATE `posts` SET `deleted_at` = '$time' WHERE `posts`.`id` = $id";
+        return $this->conn->query($sql);
     }
 }
