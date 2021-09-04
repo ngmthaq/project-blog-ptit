@@ -50,10 +50,16 @@
             </div>
             <div class="col-10" style="background-color: #f5f5f5; border-left: solid 1px #000; height: 100%;">
                 <div class="content">
-                    <div class="search-element mt-3">
-                        <form style="width:90%; margin-right: 10%">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="search-post" placeholder="Tìm kiếm ...">
+                    <div class="search-element my-3">
+                        <form class="form-inline">
+                            <div class="form-group flex-grow-1">
+                                <input type="text" class="form-control w-75" id="search-post" placeholder="Tìm kiếm ...">
+                            </div>
+                            <div class="form-group pr-3">
+                                <div class="form-check">
+                                    <input type="checkbox" name="option" id="hide-row" class="form-check-input" value="off">
+                                    <label for="hide-row" class="form-check-label">Ẩn bài viết đã xoá</label>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -70,7 +76,7 @@
                         <tbody>
                             <?php if (count($posts) > 0) : ?>
                                 <?php foreach ($posts as $post) : ?>
-                                    <tr class='post-row'>
+                                    <tr class='post-row' data-del="<?php echo $post['deleted_at'] ?? 'visible' ?>">
                                         <td><?php echo $post['category'] ?></td>
                                         <td><?php echo $post['user'] ?></td>
                                         <td class='post-title'><?php echo html_entity_decode($post['title']) ?></td>
@@ -108,6 +114,21 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             })
+
+            $('input#hide-row').change(function(e) {
+                e.preventDefault();
+                if ($(this).attr('value') == 'off') {
+                    $(this).attr('value', 'on');
+                    $("tbody tr").filter(function() {
+                        $(this).toggle($(this).attr('data-del') == 'visible')
+                    });
+                } else {
+                    $(this).attr('value', 'off');
+                    $("tbody tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf("") > -1)
+                    });
+                }
+            });
         })
     </script>
 </body>
