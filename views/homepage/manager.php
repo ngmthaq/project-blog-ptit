@@ -41,7 +41,7 @@
                         <a href="#" class="text-primary">Quản lý bài đăng</a>
                     </li>
                     <li>
-                        <a href="#" class="text-reset">Quản lý danh mục</a>
+                        <a href="#" title="Chức năng đang xây dựng" class="text-reset">Quản lý danh mục</a>
                     </li>
                     <li>
                         <a href="index.php?controller=admin&action=newPost" class="text-reset">Thêm bài đăng</a>
@@ -79,15 +79,15 @@
                                     <tr class='post-row' data-del="<?php echo $post['deleted_at'] ?? 'visible' ?>">
                                         <td><?php echo $post['category'] ?></td>
                                         <td><?php echo $post['user'] ?></td>
-                                        <td class='post-title'><?php echo html_entity_decode($post['title']) ?></td>
+                                        <td class='post-title'><?php echo html_entity_decode(html_entity_decode($post['title'])) ?></td>
                                         <td class='post-date'><?php echo date('d-m-Y', strtotime($post['date'])) ?></td>
                                         <td>
                                             <?php if (isset($post['deleted_at'])) : ?>
                                                 <span class="btn btn-sm btn-secondary">Đã xoá</span>
                                             <?php else : ?>
-                                                <a target="_blank" href="index.php?action=post&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-info">Xem</a>
-                                                <a href="#" class="btn btn-sm btn-outline-warning">Sửa</a>
-                                                <a href="index.php?controller=admin&action=delete&id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn muốn xoá bài viết này?')">Xoá</a>
+                                                <a href="index.php?action=post&id=<?php echo $post['id'] ?>" target="_blank" class="btn btn-sm btn-outline-info">Xem</a>
+                                                <a href="index.php?controller=admin&action=edit&post_id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-warning">Sửa</a>
+                                                <a href="index.php?controller=admin&action=delete&post_id=<?php echo $post['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn muốn xoá bài viết này?')">Xoá</a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -104,6 +104,13 @@
         $(function() {
             $('form').submit(function(e) {
                 e.preventDefault();
+            });
+
+            $('td.post-title').each(function (index, element) {
+                // element == this
+                $(this).html(
+                    "<p>" + $(this).text() + "</p>"
+                )
             });
 
             // Sort element

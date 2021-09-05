@@ -26,6 +26,11 @@ class DefaultController
     {
         $categories = $this->category->getCategoryAndAmountOfPost();
         $posts = $this->post->getFirstSixPostInformation();
+        $posts = array_map(function ($post) {
+            return array_map(function ($value) {
+                return html_entity_decode($value);
+            }, $post);
+        }, $posts);
         $whichPage = 'home';
         require_once('./views/homepage/homepage.php');
     }
@@ -39,7 +44,7 @@ class DefaultController
     {
         $categories = $this->category->getCategoryAndAmountOfPost();
         $posts = $this->post->getFirstSixPostInformation();
-        $whichPage ='aboutUs';
+        $whichPage = 'aboutUs';
         require_once('./views/homepage/about-us.php');
     }
 
@@ -52,7 +57,7 @@ class DefaultController
     {
         $categories = $this->category->getCategoryAndAmountOfPost();
         $posts = $this->post->getFirstSixPostInformation();
-        $whichPage ='contact';
+        $whichPage = 'contact';
         require_once('./views/homepage/contact.php');
     }
 
@@ -65,7 +70,17 @@ class DefaultController
     {
         $categories = $this->category->getCategoryAndAmountOfPost();
         $firstPost = $this->post->getFirstPostInformation($_GET);
+        $firstPost = array_map(function ($value) {
+            return html_entity_decode($value);
+        }, $firstPost);
+
         $posts = $this->post->getNextSixPostInformation($_GET);
+        $posts = array_map(function ($post) {
+            return array_map(function ($value) {
+                return html_entity_decode($value);
+            }, $post);
+        }, $posts);
+
         $whichPage = 'posts';
         $category_id = $_GET['category'] ?? 0;
         require_once('./views/posts/posts.php');
@@ -80,8 +95,16 @@ class DefaultController
     {
         $categories = $this->category->getCategoryAndAmountOfPost();
         $post = $this->post->show($_GET['id']);
+        $post = array_map(function ($value) {
+            return html_entity_decode($value);
+        }, $post);
         $category_id = $post['category_id'] ?? 0;
         $sixPosts = $this->post->getFirstSixPostInformation($category_id, $_GET['id']);
+        $sixPosts = array_map(function ($post) {
+            return array_map(function ($value) {
+                return html_entity_decode($value);
+            }, $post);
+        }, $sixPosts);
         $images = $this->postImage->show($_GET['id']);
         $whichPage = 'posts';
 
@@ -96,6 +119,11 @@ class DefaultController
     public function loadMorePosts()
     {
         $posts = $this->post->getNextSixPostInformation($_GET);
+        $posts = array_map(function ($post) {
+            return array_map(function ($value) {
+                return html_entity_decode(html_entity_decode($value));
+            }, $post);
+        }, $posts);
         $page = $_GET['page'] ?? 1;
         $data = [];
         $data['posts'] = $posts;

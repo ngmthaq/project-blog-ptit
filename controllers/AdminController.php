@@ -100,11 +100,68 @@ class AdminController
     }
 
     /**
+     * Sửa bài viết
+     * 
+     * @return void
+     */
+    public function edit()
+    {
+        if (isset($_SESSION['user'])) {
+            $categories = $this->category->getCategoryAndAmountOfPost();
+            $post = $this->post->show($_GET['post_id']);
+            $category_id = $post['category_id'] ?? 0;
+            $sixPosts = $this->post->getFirstSixPostInformation($category_id, $_GET['post_id']);
+            $images = $this->postImage->show($_GET['post_id']);
+            $whichPage = 'posts';
+            $err = [];
+            if (isset($_POST['submit'])) {
+                $file = [];
+                foreach ($images as $index => $image) {
+                    if (isset($_FILES["nofile_$index"])) {
+                        $file['name'][$index] = $image['img_name'];
+                        $file['type'][$index] = 'image/png';
+                        $file['tmp_name'][$index] = 'nofile';
+                        $file['error'][$index] = MY_UPLOAD_FILE_NO_FILE;
+                        $file['size'][$index] = 1;
+                        $file['index'][$index] = $image['img_id'];
+                    }
+                    if (isset($_FILES["img_$index"])) {
+                        $file['name'][$index] = $_FILES["img_$index"]['name'];
+                        $file['type'][$index] = $_FILES["img_$index"]['type'];
+                        $file['tmp_name'][$index] = $_FILES["img_$index"]['tmp_name'];
+                        $file['error'][$index] = $_FILES["img_$index"]['error'];
+                        $file['size'][$index] = $_FILES["img_$index"]['size'];
+                        $file['index'][$index] = $image['img_id'];
+                    }
+                    if (isset($_FILES["change_file_$index"])) {
+                        $file['name'][$index] = $_FILES["change_file_$index"]['name'];
+                        $file['type'][$index] = $_FILES["change_file_$index"]['type'];
+                        $file['tmp_name'][$index] = $_FILES["change_file_$index"]['tmp_name'];
+                        $file['error'][$index] = $_FILES["change_file_$index"]['error'];
+                        $file['size'][$index] = $_FILES["change_file_$index"]['size'];
+                        $file['index'][$index] = $image['img_id'];
+                    }
+                }
+                $err = $this->post->update($_GET['post_id'], $_POST, $file);
+                if (count($err) == 0) {
+                    header('location: index.php?controller=admin&action=manager');
+                }
+            }
+
+            require_once('./views/homepage/edit.php');
+        } else {
+            header('location: index.php?controller=admin');
+        }
+    }
+
+    /**
      * Xoá bài viết
+     * 
+     * @return void
      */
     public function delete()
     {
-        $isDeleted = $this->post->destroy($_GET['id']);
+        $isDeleted = $this->post->destroy($_GET['post_id']);
         if ($isDeleted) {
             header('location: index.php?controller=admin&action=manager');
         } else {
@@ -112,6 +169,7 @@ class AdminController
             header("refresh:3;url=index.php?controller=admin&action=manager");
         }
     }
+
 
     /**
      * Logout

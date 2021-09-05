@@ -1,6 +1,7 @@
 <?php
 
 require_once('./models/Model.php');
+require_once('./models/PostImage.php');
 
 class Post extends Model
 {
@@ -111,7 +112,8 @@ class Post extends Model
     /**
      * Thêm bài viết
      * 
-     * @param array $param
+     * @param array $post
+     * @param array $file
      * 
      * @return array
      */
@@ -121,6 +123,8 @@ class Post extends Model
         $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
         $textErr = $this->validateText($post);
         $img = $this->validateImage($file, $uploadFileDirectory);
+        $user_id = $_SESSION['user']['id'];
+        $cover_name = $img['fileHandle'][0]['name'];
 
         $err = [];
         $err = array_merge($err, $textErr, $img['err']);
@@ -144,7 +148,9 @@ class Post extends Model
                 if ($value == "") {
                     $value = date('Y-m-d');
                 }
-                return "'" . htmlentities($value) . "'";
+                // thêm backslash vào sau ký tự ' để tránh lỗi
+                $valueHandle = str_replace("'","\'",htmlentities(trim(htmlentities($value))));
+                return "'" . $valueHandle . "'";
             }, $values);
 
             $keys = array_merge(
@@ -159,16 +165,16 @@ class Post extends Model
             $values = array_merge(
                 $values,
                 [
-                    "'" . $_SESSION['user']['id'] . "'",
+                    "'" . $user_id . "'",
                     "'./" . $uploadFileDirectory . "'",
-                    "'" . $img['fileHandle'][0]['name'] . "'"
+                    "'" . $cover_name . "'"
                 ]
             );
 
             $keys = implode(', ', $keys);
             $values = implode(', ', $values);
-
             $sql = "INSERT INTO `posts` ($keys) VALUES ($values)";
+            // die($sql);
             $newPost = $this->conn->query($sql);
             if ($newPost) {
                 $lastPostId = $this->getLastPostId();
@@ -181,6 +187,96 @@ class Post extends Model
                     }
                     $img_sql = "INSERT INTO `post_image`
                             VALUES (NULL, '$lastPostId', $img_path, '$img_name')";
+                    $newImg = $this->conn->query($img_sql);
+                }
+            }
+        }
+        return [];
+    }
+
+    /**
+     * Update bài viết
+     * 
+     * @param int $id
+     * @param array $post
+     * @param array $file
+     * 
+     * @return array
+     */
+    public function update($post_id, $post, $file)
+    {
+        array_pop($post);
+        $uploadFileDirectory = 'public' . MY_DIRECTORY_SEPARATOR . 'storage';
+        $textErr = $this->validateText($post);
+        $img = $this->validateImage($file, $uploadFileDirectory);
+        $user_id = $_SESSION['user']['id'];
+        $cover_name = $img['fileHandle'][0]['name'];
+
+        $err = [];
+        $err = array_merge($err, $textErr, $img['err']);
+
+        $isValidated = true;
+
+        if (count($err) > 0) {
+            $isValidated = false;
+            return $err;
+        }
+
+        if ($isValidated) {
+            $keys = array_keys($post);
+            $values = array_values($post);
+
+            $keys = array_map(function ($value) {
+                return "`" . $value . "`";
+            }, $keys);
+
+            $values = array_map(function ($value) {
+                if ($value == "") {
+                    $value = date('Y-m-d');
+                }
+                $valueHandle = str_replace("'","\'",htmlentities(trim(htmlentities($value))));
+                return "'" . $valueHandle . "'";
+            }, $values);
+
+            $keys = array_merge(
+                $keys,
+                [
+                    '`user_id`',
+                    '`cover_path`',
+                    '`cover_name`'
+                ]
+            );
+
+            $values = array_merge(
+                $values,
+                [
+                    "'" . $user_id . "'",
+                    "'./" . $uploadFileDirectory . "'",
+                    "'" . $cover_name . "'"
+                ]
+            );
+
+            $sets = [];
+            $setsArray = array_combine($keys, $values);
+            foreach ($setsArray as $key => $value) {
+                $sets[] = $key . " = " . $value;
+            }
+            $sets = implode(', ', $sets);
+
+            $sql = "UPDATE `posts` SET $sets WHERE posts.id = $post_id";
+            // die($sql);
+            $newPost = $this->conn->query($sql);
+            if ($newPost) {
+                $lastPostId = $this->getLastPostId();
+                $img_path = "'./" . $uploadFileDirectory . "'";
+                foreach ($img['fileHandle'] as $img) {
+                    $img_tmp = $img['tmp'];
+                    $img_name = $img['name'];
+                    $img_index = $img['index'];
+                    if ($img_tmp != 'nofile') {
+                        move_uploaded_file($img_tmp, $uploadFileDirectory . MY_DIRECTORY_SEPARATOR . $img_name);
+                    }
+                    $img_sql = "UPDATE `post_image` SET img_name = '$img_name' WHERE id = $img_index AND post_id = $post_id";
                     $newImg = $this->conn->query($img_sql);
                 }
             }
@@ -214,14 +310,21 @@ class Post extends Model
                 } else {
                     $fileHandle[$index]['tmp'] = $file['tmp_name'][$index];
                     $fileHandle[$index]['name'] = md5($_SESSION['user']['id'] . $index . $originalName . date('d-m-Y h:i:s')) . '.png';
+                    $fileHandle[$index]['index'] = $file['index'][$index] ?? null;
                 }
             } elseif ($error == UPLOAD_ERR_NO_FILE) {
                 $fileHandle[$index]['tmp'] = 'nofile';
                 $fileHandle[$index]['name'] = 'noname';
+                $fileHandle[$index]['index'] = $file['index'][$index] ?? null;
+            } elseif ($error == MY_UPLOAD_FILE_NO_FILE) {
+                $fileHandle[$index]['tmp'] = 'nofile';
+                $fileHandle[$index]['name'] = $file['name'][$index];
+                $fileHandle[$index]['index'] = $file['index'][$index] ?? null;
             } else {
                 $err['img_' . $index] = 'Tải ảnh lên không thành công';
                 $fileHandle[$index]['tmp'] = 'nofile';
                 $fileHandle[$index]['name'] = 'noname';
+                $fileHandle[$index]['index'] = $file['index'][$index] ?? null;
             }
         }
 
@@ -242,7 +345,7 @@ class Post extends Model
             if ($key == 'date') {
                 continue;
             }
-            if ($value == "") {
+            if (trim($value) == "") {
                 $err[$key] = 'Vui lòng nhập trường này';
             }
         }
@@ -272,7 +375,7 @@ class Post extends Model
      */
     public function show($id)
     {
-        $sql = "SELECT users.name as 'user', posts.*, categories.* FROM posts 
+        $sql = "SELECT users.name as 'user', posts.*, categories.name, categories.image FROM posts 
         INNER JOIN categories ON posts.category_id = categories.id
         INNER JOIN users ON posts.user_id = users.id 
         WHERE posts.id = $id AND posts.deleted_at IS NULL";

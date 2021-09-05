@@ -10,8 +10,9 @@ class Category extends Model
     {
         $sql = "SELECT categories.id, categories.name, categories.image, 
             COUNT(posts.deleted_at) AS 'deleted', COUNT(posts.id) AS 'posts' 
-            FROM categories LEFT JOIN posts ON categories.id = posts.category_id 
-            GROUP BY categories.name, categories.image, posts.deleted_at 
+            FROM categories LEFT JOIN posts 
+            ON categories.id = posts.category_id 
+            GROUP BY categories.name, categories.image, categories.id 
             ORDER BY id ASC";
 
         $result = $this->conn->query($sql);

@@ -12,7 +12,8 @@
 <body>
     <div class="main">
         <div class="container">
-            <h1>CKeditor</h1>
+            <a href="index.php?controller=admin&action=manager" class="btn btn-primary my-4">Quay lại</a>
+            <h1>Thêm bài viết</h1>
             <form action="index.php?controller=admin&action=newPost" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="form-group col-6">
@@ -23,7 +24,7 @@
                                 <option value="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?php echo (isset($err['category_id'])) ? '<small class="text-danger d-block">'.$err['category_id'].'</small>' : '' ?>
+                        <?php echo (isset($err['category_id'])) ? '<small class="text-danger d-block">' . $err['category_id'] . '</small>' : '' ?>
                     </div>
                     <div class="form-group col-6">
                         <label for="date">Ngày đăng</label>
@@ -34,18 +35,18 @@
                 <fieldset>
                     <legend>Mở bài</legend>
                     <label for="title">Tiêu đề 1</label>
-                    <textarea name="title" id="title"></textarea>
-                    <?php echo (isset($err['title'])) ? '<small class="text-danger d-block">'.$err['title'].'</small>' : '' ?>
+                    <textarea class="textarea" name="title" id="title"></textarea>
+                    <?php echo (isset($err['title'])) ? '<small class="text-danger d-block">' . $err['title'] . '</small>' : '' ?>
 
                     <label for="subtitle">Tiêu đề phụ</label>
-                    <textarea name="subtitle" id="subtitle"></textarea>
-                    <?php echo (isset($err['subtitle'])) ? '<small class="text-danger d-block">'.$err['subtitle'].'</small>' : '' ?>
+                    <textarea class="textarea" name="subtitle" id="subtitle"></textarea>
+                    <?php echo (isset($err['subtitle'])) ? '<small class="text-danger d-block">' . $err['subtitle'] . '</small>' : '' ?>
                     <br>
 
                     <div class="form-group">
                         <label for="cover">Ảnh bìa</label><br>
                         <input type="file" name="img[]" id="cover" class="form-controller-file">
-                        <?php echo (isset($err['img_0'])) ? '<small class="text-danger d-block">'.$err['img_0'].'</small>' : '' ?>
+                        <?php echo (isset($err['img_0'])) ? '<small class="text-danger d-block">' . $err['img_0'] . '</small>' : '' ?>
                     </div>
                 </fieldset>
 
@@ -56,24 +57,24 @@
                     <fieldset>
                         <legend><small>Đoạn 1</small></legend>
                         <label for="heading_1">Tiêu đề:</label>
-                        <textarea name="heading_1" id="heading_1"></textarea>
-                        <?php echo (isset($err['heading_1'])) ? '<small class="text-danger d-block">'.$err['heading_1'].'</small>' : '' ?>
+                        <textarea class="textarea" name="heading_1" id="heading_1"></textarea>
+                        <?php echo (isset($err['heading_1'])) ? '<small class="text-danger d-block">' . $err['heading_1'] . '</small>' : '' ?>
                         <br>
 
                         <label for="paragraph_1_1">Content:</label>
-                        <textarea name="paragraph_1_1" id="paragraph_1_1"></textarea>
-                        <?php echo (isset($err['paragraph_1_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_1_1'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_1_1" id="paragraph_1_1"></textarea>
+                        <?php echo (isset($err['paragraph_1_1'])) ? '<small class="text-danger d-block">' . $err['paragraph_1_1'] . '</small>' : '' ?>
                         <br>
 
                         <div class="form-group">
                             <label for="img_1">Ảnh</label><br>
                             <input type="file" name="img[]" id="img_1" class="form-controller-file">
-                            <?php echo (isset($err['img_1'])) ? '<small class="text-danger d-block">'.$err['img_1'].'</small>' : '' ?>
+                            <?php echo (isset($err['img_1'])) ? '<small class="text-danger d-block">' . $err['img_1'] . '</small>' : '' ?>
                         </div>
 
                         <label for="paragraph_1_2">Content:</label>
-                        <textarea name="paragraph_1_2" id="paragraph_1_2"></textarea>
-                        <?php echo (isset($err['paragraph_1_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_1_2'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_1_2" id="paragraph_1_2"></textarea>
+                        <?php echo (isset($err['paragraph_1_2'])) ? '<small class="text-danger d-block">' . $err['paragraph_1_2'] . '</small>' : '' ?>
                         <br>
                     </fieldset>
 
@@ -81,24 +82,24 @@
                     <fieldset>
                         <legend><small>Đoạn 2</small></legend>
                         <label for="heading_2">Tiêu đề:</label>
-                        <textarea name="heading_2" id="heading_2"></textarea>
-                        <?php echo (isset($err['heading_2'])) ? '<small class="text-danger d-block">'.$err['heading_2'].'</small>' : '' ?>
+                        <textarea class="textarea" name="heading_2" id="heading_2"></textarea>
+                        <?php echo (isset($err['heading_2'])) ? '<small class="text-danger d-block">' . $err['heading_2'] . '</small>' : '' ?>
                         <br>
 
                         <label for="paragraph_2_1">Content:</label>
-                        <textarea name="paragraph_2_1" id="paragraph_2_1"></textarea>
-                        <?php echo (isset($err['paragraph_2_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_2_1'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_2_1" id="paragraph_2_1"></textarea>
+                        <?php echo (isset($err['paragraph_2_1'])) ? '<small class="text-danger d-block">' . $err['paragraph_2_1'] . '</small>' : '' ?>
                         <br>
 
                         <div class="form-group">
                             <label for="img_2">Ảnh</label><br>
                             <input type="file" name="img[]" id="img_2" class="form-controller-file">
-                            <?php echo (isset($err['img_2'])) ? '<small class="text-danger d-block">'.$err['img_2'].'</small>' : '' ?>
+                            <?php echo (isset($err['img_2'])) ? '<small class="text-danger d-block">' . $err['img_2'] . '</small>' : '' ?>
                         </div>
 
                         <label for="paragraph_2_2">Content:</label>
-                        <textarea name="paragraph_2_2" id="paragraph_2_2"></textarea>
-                        <?php echo (isset($err['paragraph_2_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_2_2'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_2_2" id="paragraph_2_2"></textarea>
+                        <?php echo (isset($err['paragraph_2_2'])) ? '<small class="text-danger d-block">' . $err['paragraph_2_2'] . '</small>' : '' ?>
                         <br>
                     </fieldset>
 
@@ -106,24 +107,24 @@
                     <fieldset>
                         <legend><small>Đoạn 3</small></legend>
                         <label for="heading_3">Tiêu đề:</label>
-                        <textarea name="heading_3" id="heading_3"></textarea>
-                        <?php echo (isset($err['heading_3'])) ? '<small class="text-danger d-block">'.$err['heading_3'].'</small>' : '' ?>
+                        <textarea class="textarea" name="heading_3" id="heading_3"></textarea>
+                        <?php echo (isset($err['heading_3'])) ? '<small class="text-danger d-block">' . $err['heading_3'] . '</small>' : '' ?>
                         <br>
 
                         <label for="paragraph_3_1">Content:</label>
-                        <textarea name="paragraph_3_1" id="paragraph_3_1"></textarea>
-                        <?php echo (isset($err['paragraph_3_1'])) ? '<small class="text-danger d-block">'.$err['paragraph_3_1'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_3_1" id="paragraph_3_1"></textarea>
+                        <?php echo (isset($err['paragraph_3_1'])) ? '<small class="text-danger d-block">' . $err['paragraph_3_1'] . '</small>' : '' ?>
                         <br>
 
                         <div class="form-group">
                             <label for="img_3">Ảnh</label><br>
                             <input type="file" name="img[]" id="img_3" class="form-controller-file">
-                            <?php echo (isset($err['img_3'])) ? '<small class="text-danger d-block">'.$err['img_3'].'</small>' : '' ?>
+                            <?php echo (isset($err['img_3'])) ? '<small class="text-danger d-block">' . $err['img_3'] . '</small>' : '' ?>
                         </div>
 
                         <label for="paragraph_3_2">Content:</label>
-                        <textarea name="paragraph_3_2" id="paragraph_3_2"></textarea>
-                        <?php echo (isset($err['paragraph_3_2'])) ? '<small class="text-danger d-block">'.$err['paragraph_3_2'].'</small>' : '' ?>
+                        <textarea class="textarea" name="paragraph_3_2" id="paragraph_3_2"></textarea>
+                        <?php echo (isset($err['paragraph_3_2'])) ? '<small class="text-danger d-block">' . $err['paragraph_3_2'] . '</small>' : '' ?>
                         <br>
                     </fieldset>
                 </fieldset>
@@ -131,8 +132,8 @@
                 <fieldset>
                     <legend>Kết bài</legend>
                     <label for="last_paragraph">Content</label>
-                    <textarea name="last_paragraph" id="last_paragraph"></textarea>
-                    <?php echo (isset($err['last_paragraph'])) ? '<small class="text-danger d-block">'.$err['last_paragraph'].'</small>' : '' ?>
+                    <textarea class="textarea" name="last_paragraph" id="last_paragraph"></textarea>
+                    <?php echo (isset($err['last_paragraph'])) ? '<small class="text-danger d-block">' . $err['last_paragraph'] . '</small>' : '' ?>
                     <br>
                 </fieldset>
 
@@ -140,6 +141,13 @@
             </form>
         </div>
     </div>
+    <?php require_once('./views/parts/__script.php') ?>
+    <script>
+        $(function() {
+            
+        })
+
+    </script>
     <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor

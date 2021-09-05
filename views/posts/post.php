@@ -90,7 +90,7 @@
                 <div class="col-lg-9 col-12">
                     <div class="box">
                         <div>
-                            <strong><?php echo html_entity_decode($post['title']) ?></strong>
+                            <h3><strong><?php echo html_entity_decode($post['title']) ?></strong></h3>
                         </div>
                         <small>
                             Bởi <?php echo $post['user'] ?> - Ngày <?php echo date('d/m/Y', strtotime($post['date'])) ?>
@@ -98,12 +98,14 @@
                         <p class="text-justify">
                             <?php echo html_entity_decode($post['subtitle']) ?>
                         </p>
-                        <img src="<?php echo $post['cover_path'] . MY_DIRECTORY_SEPARATOR . $post['cover_name'] ?>" alt="Ảnh bìa">
+                        <?php if ($images[0]['img_name'] != 'noname') : ?>
+                            <img src="<?php echo $images[0]['img_path'] . MY_DIRECTORY_SEPARATOR . $images[0]['img_name'] ?>" alt="ảnh">
+                        <?php endif; ?>
                         <br>
                     </div>
                     <div class="box">
                         <div class="text-justify">
-                            <strong class="d-flex">1. <?php echo html_entity_decode($post['heading_1']) ?></strong>
+                        <h4><strong class="d-flex">1.&nbsp;<?php echo html_entity_decode($post['heading_1']) ?></strong></h4>
                         </div>
                         <div class="text-justify">
                             <?php echo html_entity_decode($post['paragraph_1_1']) ?>
@@ -117,7 +119,7 @@
                     </div>
                     <div class="box">
                         <div class="text-justify">
-                            <strong class="d-flex">2. <?php echo html_entity_decode($post['heading_2']) ?></strong>
+                        <h4><strong class="d-flex">2.&nbsp;<?php echo html_entity_decode($post['heading_2']) ?></strong></h4>
                         </div>
                         <div class="text-justify">
                             <?php echo html_entity_decode($post['paragraph_2_1']) ?>
@@ -131,7 +133,7 @@
                     </div>
                     <div class="box">
                         <div class="text-justify">
-                            <strong class="d-flex">3. <?php echo html_entity_decode($post['heading_3']) ?></strong>
+                        <h4><strong class="d-flex">3.&nbsp;<?php echo html_entity_decode($post['heading_3']) ?></strong></h4>
                         </div>
                         <div class="text-justify">
                             <?php echo html_entity_decode($post['paragraph_3_1']) ?>
@@ -158,8 +160,12 @@
                         <ul class="post-categories">
                             <?php foreach ($categories as $category) : ?>
                                 <li>
-                                    <a <?php echo ($category['id'] == $category_id) ? 'style="color:#19c3dd;"' : '' ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>"><?php echo $category['name'] ?></a>
-                                    <small><?php echo ($category['posts'] > 99) ? '99+' : $category['posts'] ?> <?php echo ($category['posts'] > 1) ? 'posts' : 'post' ?></small>
+                                    <a <?php echo ($category['id'] == $category_id) ? 'style="color:#19c3dd;"' : '' ?> href="index.php?action=posts&category=<?php echo $category['id'] ?>">
+                                        <?php echo $category['name'] ?>
+                                    </a>
+                                    <small>
+                                        <?php echo ($category['posts'] - $category['deleted'] > 99) ? '99+' : $category['posts'] - $category['deleted'] ?> <?php echo ($category['posts'] - $category['deleted'] > 1) ? 'posts' : 'post' ?>
+                                    </small>
                                 </li>
                             <?php endforeach; ?>
                             <li>
@@ -168,7 +174,7 @@
                                     <?php
                                     $totalPosts = 0;
                                     foreach ($categories as $category) {
-                                        $totalPosts += $category['posts'];
+                                        $totalPosts += ($category['posts'] - $category['deleted']);
                                     }
                                     echo ($totalPosts > 99) ? '99+' : $totalPosts;
                                     echo ($totalPosts > 1) ? ' posts' : ' post';
@@ -271,6 +277,8 @@
             $(window).scroll(function() {
                 $('test').css('top', 'calc(40% + ' + $(this).scrollTop() * 1.1 + 'px)');
             });
+
+            $('li[aria-current="page"]').html("<p>" + $('li[aria-current="page"]').text() + "</p>");
         })
     </script>
 </body>
