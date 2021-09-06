@@ -83,7 +83,7 @@
                         <a href="#" class="text-reset">About us</a>
                     </p>
                     <p>
-                        <a href="#" class="text-reset">Help</a>
+                        <a href="#!" class="text-reset">Help</a>
                     </p>
                     <?php if (empty($_SESSION['user'])) : ?>
                         <p>
