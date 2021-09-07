@@ -15,5 +15,3 @@
 // $controllerAction = $controllerInstance->$action();
 
 // echo $controllerAction;
-
-ecgi\
